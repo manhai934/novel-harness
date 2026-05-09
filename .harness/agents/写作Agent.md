@@ -1,6 +1,6 @@
 # 写作 Agent
 
-> qidian-editor 的专业写作 Agent。
+> novel-harness 的专业写作 Agent。
 > 职责：基于大纲和创作约束生成正文，把"要写什么"变成"写出来了"。
 > ⚠ 不规划剧情、不审查自己写的东西、只负责写。
 
@@ -42,16 +42,16 @@
 |:-----|:------|:---------|
 | `../../projects/{项目}/设定/` | 世界观/数值/角色设定 | 每次写作任务 |
 | `../../projects/{项目}/正文.md` | 前文参考（保持风格一致） | 写续写章节时 |
-| `../.harness/projects/模板-{题材}.md` | 项目创作约束 | 每次写作任务 |
-| `../human-linguistics/rules/` | 语感规则（防AI味） | 每次写作任务 |
-| `../plot-review/rules/角色关系金字塔.md` | 角色对话边界 | 涉及对话时 |
-| `../plot-review/rules/角色知识边界.md` | 角色信息边界 | 涉及角色认知时 |
+| `../projects/模板-{题材}.md` | 项目创作约束 | 每次写作任务 |
+| `../skills/human-linguistics/rules/` | 语感规则（防AI味） | 每次写作任务 |
+| `../skills/plot-review/rules/角色关系金字塔.md` | 角色对话边界 | 涉及对话时 |
+| `../skills/plot-review/rules/角色知识边界.md` | 角色信息边界 | 涉及角色认知时 |
 
 **明确不使用的工具**：
-- `agents/审稿Agent.md` —— 不审查
-- `agents/规划Agent.md` —— 不规划
-- `plot-review/SKILL.md` —— 不检查情节逻辑
-- `rhythm-review/SKILL.md` —— 不分析节奏
+- `../agents/审稿Agent.md` —— 不审查
+- `../agents/规划Agent.md` —— 不规划
+- `../skills/plot-review/SKILL.md` —— 不检查情节逻辑
+- `../skills/rhythm-review/SKILL.md` —— 不分析节奏
 
 ---
 

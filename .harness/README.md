@@ -1,6 +1,6 @@
 # .harness — L0 项目上下文层
 
-> 本目录是 qidian-editor Harness 工程体系的 L0 层。
+> 本目录是 novel-harness Harness 工程体系的 L0 层。
 > 作用：告诉 Agent "当前在写哪本书"，以及这本书的创作约束是什么。
 
 ---

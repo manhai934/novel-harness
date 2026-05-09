@@ -29,19 +29,19 @@
 L0（项目上下文）
    ├── 当前写哪本小说
    ├── 创作约束（成长曲线/防膨胀/阶段天花板）
-   └── 文件：harness/qidian-editor/.harness/
+   └── 文件：.harness/
 
 L1（总编层）
    ├── 理解需求 → 分派任务 → 协调流程
    ├── 不执行具体工作，只做调度和质量管理
-   └── 文件：harness/qidian-editor/SKILL.md
+   └── 文件：SKILL.md
 
 L2（专业 Agent 层）
    ├── 上下文 Agent — 状态管理 + 信息打包
    ├── 规划 Agent — 剧情构思 + 大纲生成
    ├── 写作 Agent — 正文生成
    ├── 审稿 Agent — 质量审查
-   └── 文件：harness/qidian-editor/agents/*.md
+   └── 文件：agents/*.md
 
 L3（数据层）
    ├── 项目文件：projects/{项目名}/正文/ 状态/ 记忆/
@@ -221,29 +221,30 @@ novel-harness/
 │           ├── 章节摘要/             ← 每章 200 字摘要
 │           └── 风格参考.md           ← 最近 N 章风格特征
 │
-├── harness/                          ← Harness 工程系统
-│   └── qidian-editor/
-│       ├── SKILL.md                  ← 总编 Agent 定义（L1 协调层）
-│       ├── .harness/                 ← L0 项目模板
-│       ├── agents/
-│       │   ├── 上下文Agent.md        ← 记忆中枢
-│       │   ├── 规划Agent.md          ← 剧情构思
-│       │   ├── 写作Agent.md          ← 正文生成
-│       │   └── 审稿Agent.md          ← 质量审查
-│       ├── memory/                   ← 记忆系统模板
-│       ├── rules/                    ← 辅助规则
-│       ├── game-datafied/            ← 题材审查
-│       ├── human-linguistics/        ← 语感审查
-│       ├── plot-review/              ← 情节审查
-│       ├── rhythm-review/            ← 节奏审查
-│       ├── plot-ideation/            ← 创作灵感
-│       └── cases/                    ← 案例/反馈
+├── SKILL.md                          ← 总编 Agent 定义（L1 协调层）
+├── .harness/                         ← Harness 核心工程系统
+│   ├── current-project.md            ← 当前项目指针
+│   ├── projects/                     ← 项目约束模板
+│   ├── agents/
+│   │   ├── 上下文Agent.md            ← 记忆中枢
+│   │   ├── 规划Agent.md              ← 剧情构思
+│   │   ├── 写作Agent.md              ← 正文生成
+│   │   └── 审稿Agent.md              ← 质量审查
+│   ├── skills/
+│   │   ├── game-datafied/            ← 题材审查
+│   │   ├── human-linguistics/        ← 语感审查
+│   │   ├── plot-review/              ← 情节审查
+│   │   ├── rhythm-review/            ← 节奏审查
+│   │   └── plot-ideation/            ← 创作灵感
+│   ├── rules/                        ← 辅助规则
+│   ├── memory/                       ← 记忆系统模板
+│   └── cases/                        ← 案例/反馈
 │
-├── skills/                           ← 其他平台内置/独立 skill（qidian-editor 已合并到 harness）
+├── skills/                           ← 其他独立 skill
 └── planning/                         ← 规划文档
 ```
 
-> 旧入口 `.harness/` 与 `.workspace/` 已废弃；当前项目指针统一使用 `harness/qidian-editor/.harness/current-project.md`。
+> `.workspace/` 旧入口已废弃；当前项目指针统一使用 `.harness/current-project.md`。
 > `projects/` 会随仓库保留为空目录，但其中具体小说正文、设定、状态和记忆文件默认被 `.gitignore` 忽略，不上传到远程。
 
 ---
@@ -294,7 +295,7 @@ novel-harness/
 
 ## 项目自定义
 
-每个小说项目有自己的创作约束模板，位于 `harness/qidian-editor/.harness/projects/`。
+每个小说项目有自己的创作约束模板，位于 `.harness/projects/`。
 
 ### 预置模板
 

@@ -3,7 +3,7 @@
 > 基于 Anthropic Harness Engineering 方法论 × 网文创作领域映射
 > 核心参考：Effective Harnesses for Long-Running Agents / OpenAI Codex Harness Practice
 > 核心理念：**写小说不是一个 skill，是一个 Agent 系统。**
-> 历史说明：本文档记录早期从 `skills/qidian-editor` 演进到 Harness 的方案。当前实现已统一到 `harness/qidian-editor`，旧路径只作历史语境参考。
+> 历史说明：本文档记录早期从 `skills/qidian-editor` 演进到 Harness 的方案。当前实现已统一到仓库根目录，旧路径只作历史语境参考。
 
 ---
 
@@ -399,7 +399,7 @@ Agent 理解业务上下文的素材（Domain Context）：
   - 类型四：写作辅助（未来）
 3. **建立结构骨架**
   ```
-   harness/qidian-editor/
+   novel-harness/
    ├── agents/
    │   └── chief-editor.md      ← Agent 定义
    ├── rules/                    ← 从主模块抽离
@@ -464,7 +464,7 @@ Agent 理解业务上下文的素材（Domain Context）：
 **目标**：每次审稿都是学习机会，系统自动完善
 
 1. **错误案例自动积累**
-  - 每次用户修正 → 记录到 cases/
+  - 每次用户修正 → 记录到 .harness/cases/
   - 同类错误出现 3 次 → 自动升级到"高频红线"
 2. **知识库自动扩展**
   - Agent 发现规则无法覆盖的新语病 → 建议追加规则

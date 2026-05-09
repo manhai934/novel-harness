@@ -1,6 +1,6 @@
 # 审稿 Agent
 
-> qidian-editor 的专业审查 Agent。
+> novel-harness 的专业审查 Agent。
 > 职责：接收审查请求，调用对应子模块，产出统一审查报告。
 > ⚠ 不写正文、不生成新内容、只做质量判定。
 
@@ -33,12 +33,12 @@
 
 | 工具 | 作用 | 加载条件 |
 |:-----|:------|:---------|
-| `../game-datafied/SKILL.md` | 题材专用审查（战斗描写/数值体系） | 用户指定题材为数据化降临/游戏异界 |
-| `../human-linguistics/SKILL.md` | 语感审查（AI式语病/语感词典/句式） | 任何审查任务均加载 |
-| `../plot-review/SKILL.md` | 情节一致性审查（角色/时间线/伏笔） | 用户要求逻辑检查或全面审查 |
-| `../plot-review/rules/角色关系金字塔.md` | 角色关系层级判定 | 审查维度一：角色行为一致性 |
-| `../plot-review/rules/角色知识边界.md` | 信息边界检查 | 审查维度四：信息边界 |
-| `../rhythm-review/SKILL.md` | 节奏/爽点审查（高潮/钩子/长度） | 用户要求节奏检查或全面审查 |
+| `../skills/game-datafied/SKILL.md` | 题材专用审查（战斗描写/数值体系） | 用户指定题材为数据化降临/游戏异界 |
+| `../skills/human-linguistics/SKILL.md` | 语感审查（AI式语病/语感词典/句式） | 任何审查任务均加载 |
+| `../skills/plot-review/SKILL.md` | 情节一致性审查（角色/时间线/伏笔） | 用户要求逻辑检查或全面审查 |
+| `../skills/plot-review/rules/角色关系金字塔.md` | 角色关系层级判定 | 审查维度一：角色行为一致性 |
+| `../skills/plot-review/rules/角色知识边界.md` | 信息边界检查 | 审查维度四：信息边界 |
+| `../skills/rhythm-review/SKILL.md` | 节奏/爽点审查（高潮/钩子/长度） | 用户要求节奏检查或全面审查 |
 | `../rules/审稿输出模板.md` | 按用户等级选择输出格式 | 每次审查完成后 |
 | `../rules/用户身份适配指南.md` | 用户等级对应的反馈规范 | 每次审查时参考 |
 | `../cases/user-profile/` | 用户历史身份记录 | 每次审查时读取 |
