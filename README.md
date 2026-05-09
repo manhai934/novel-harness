@@ -207,19 +207,19 @@ Agent：好的，几个问题：
 novel-harness/
 │
 ├── projects/                         ← 小说项目（你的创作内容）
-│   ├── 游戏降临/
-│   │   ├── 正文/                     ← 已完成的章节
-│   │   ├── 大纲/                     ← 创作蓝图
-│   │   ├── 设定/                     ← 世界观/数值/角色设定
-│   │   ├── 状态/                     ← ★ 上下文 Agent 维护
-│   │   │   ├── 主角.md               ← 主角当前状态
-│   │   │   ├── 角色/                 ← 配角状态
-│   │   │   └── 伏笔登记表.md         ← 伏笔生命周期
-│   │   └── 记忆/                     ← ★ 上下文 Agent 维护
-│   │       ├── 事件索引.md           ← 重大事件按章索引
-│   │       ├── 章节摘要/             ← 每章 200 字摘要
-│   │       └── 风格参考.md           ← 最近 N 章风格特征
-│   └── 短篇-奖励翻倍/
+│   ├── .gitkeep                      ← 仅用于保留目录
+│   └── {项目名}/                     ← 本地创作内容，默认不上传
+│       ├── 正文/                     ← 已完成的章节
+│       ├── 大纲/                     ← 创作蓝图
+│       ├── 设定/                     ← 世界观/数值/角色设定
+│       ├── 状态/                     ← ★ 上下文 Agent 维护
+│       │   ├── 主角.md               ← 主角当前状态
+│       │   ├── 角色/                 ← 配角状态
+│       │   └── 伏笔登记表.md         ← 伏笔生命周期
+│       └── 记忆/                     ← ★ 上下文 Agent 维护
+│           ├── 事件索引.md           ← 重大事件按章索引
+│           ├── 章节摘要/             ← 每章 200 字摘要
+│           └── 风格参考.md           ← 最近 N 章风格特征
 │
 ├── harness/                          ← Harness 工程系统
 │   └── qidian-editor/
@@ -244,6 +244,7 @@ novel-harness/
 ```
 
 > 旧入口 `.harness/` 与 `.workspace/` 已废弃；当前项目指针统一使用 `harness/qidian-editor/.harness/current-project.md`。
+> `projects/` 会随仓库保留为空目录，但其中具体小说正文、设定、状态和记忆文件默认被 `.gitignore` 忽略，不上传到远程。
 
 ---
 
@@ -327,7 +328,9 @@ git add .
 git commit -m "init: 项目初始化"
 ```
 
-### 每章完成后的标准流程（上下文 Agent 自动执行）
+### 每章完成后的本地记录流程
+
+`projects/` 下的具体创作内容默认不提交到远程。若你只在本地管理小说版本，可以继续用 Git 记录；若要上传某个项目，需要临时调整 `.gitignore` 或手动 `git add -f` 指定文件。
 
 ```bash
 git add projects/{项目名}/正文/  projects/{项目名}/状态/  projects/{项目名}/记忆/
@@ -338,10 +341,10 @@ git commit -m "Ch{N}: {章节标题} — {一句话钩子}"
 
 ```bash
 # 回溯某章时的主角状态
-git show Ch120:projects/游戏降临/状态/主角.md
+git show Ch120:projects/{项目名}/状态/主角.md
 
 # 查看两章之间的属性变化
-git diff Ch120..Ch130 projects/游戏降临/状态/主角.md
+git diff Ch120..Ch130 projects/{项目名}/状态/主角.md
 
 # 实验性分支（测试新剧情方向）
 git branch 实验-分支名
@@ -350,7 +353,7 @@ git checkout 实验-分支名
 git checkout main
 
 # 审稿对比（看改了什么）
-git diff HEAD~1 projects/游戏降临/正文/第80章.md
+git diff HEAD~1 projects/{项目名}/正文/第80章.md
 ```
 
 ---
