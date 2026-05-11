@@ -371,3 +371,11 @@ git diff HEAD~1 projects/{项目名}/正文/第80章.md
 | **自我进化** | 无 | **反馈追踪 + 3 次误判触发规则更新** |
 | **Git** | 无 | **每章 commit + 回溯 + 分支实验** |
 | **容量** | 几千字 | **200 万字** |
+
+---
+
+## 感谢与支持
+
+[![LINUXDO](https://img.shields.io/badge/%E7%A4%BE%E5%8C%BA-LINUXDO-0086c9?style=for-the-badge&labelColor=555555)](https://linux.do)
+
+感谢 **`linux.do`** 社区的讨论、分享与支持。这个项目在方法论整理、实践思路和持续迭代上，都受益于社区氛围与成员交流。
