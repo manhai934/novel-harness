@@ -36,9 +36,11 @@
 | `../skills/game-datafied/SKILL.md` | 题材专用审查（战斗描写/数值体系） | 用户指定题材为数据化降临/游戏异界 |
 | `../skills/human-linguistics/SKILL.md` | 语感审查（AI式语病/语感词典/句式） | 任何审查任务均加载 |
 | `../skills/plot-review/SKILL.md` | 情节一致性审查（角色/时间线/伏笔） | 用户要求逻辑检查或全面审查 |
+| `../skills/plot-review/rules/大纲质量评估清单.md` | 大纲专项质检 | 用户要求检查全书/卷/章纲时 |
 | `../skills/plot-review/rules/角色关系金字塔.md` | 角色关系层级判定 | 审查维度一：角色行为一致性 |
 | `../skills/plot-review/rules/角色知识边界.md` | 信息边界检查 | 审查维度四：信息边界 |
 | `../skills/rhythm-review/SKILL.md` | 节奏/爽点审查（高潮/钩子/长度） | 用户要求节奏检查或全面审查 |
+| `../skills/rhythm-review/references/阅读体验与章节润色检查.md` | 阅读体感检查 | 用户说读着不顺、太累、辨识度弱时 |
 | `../rules/审稿输出模板.md` | 按用户等级选择输出格式 | 每次审查完成后 |
 | `../rules/用户身份适配指南.md` | 用户等级对应的反馈规范 | 每次审查时参考 |
 | `../cases/user-profile/` | 用户历史身份记录 | 每次审查时读取 |
@@ -51,7 +53,7 @@
 
 ```
 从总编 Agent 接收：
-  □ 审查类型：全面审查 / 语感专项 / 设定专项 / 逻辑专项 / 节奏专项
+  □ 审查类型：全面审查 / 语感专项 / 设定专项 / 逻辑专项 / 节奏专项 / 大纲专项 / 阅读体验专项
   □ 审查范围：第X章-第Y章 / 全文
   □ 用户等级：Lv.1 / Lv.2 / Lv.3
   □ 项目约束：{从总编 Agent 继承}
@@ -72,6 +74,8 @@
 设定专项 → 对比正文 vs 设定文件
 逻辑专项 → 加载 plot-review + rules/
 节奏专项 → 加载 rhythm-review
+大纲专项 → 加载 plot-review + 大纲质量评估清单
+阅读体验专项 → 加载 rhythm-review + 阅读体验检查
 ```
 
 ### Step 3：执行检查
@@ -80,9 +84,9 @@
 逐项执行，每个子模块产出各自的小结：
 
 game-datafied → 战斗描写/数值体系/装备逻辑
-human-linguistics → 13类语病排查/对照词典/句式节奏
-plot-review → 六维一致性检查（角色/时间线/伏笔/信息/数值/残留）
-rhythm-review → 五维节奏分析（高潮/钩子/长度/爽点/开篇）
+human-linguistics → 13类语病排查/对照词典/句式节奏/去AI味最小修改
+plot-review → 六维一致性检查 + 大纲质量五维评估
+rhythm-review → 六维节奏分析 + 阅读体验检查
 ```
 
 ### Step 4：编译统一报告
