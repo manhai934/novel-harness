@@ -4,6 +4,7 @@ projects/*
 
 .claude/
 .cursor/
+docs/
 planning/
 
 # RAG 运行时数据（SQLite 索引、向量文件）
@@ -15,4 +16,3 @@ rag/node_modules/
 # Python 缓存
 __pycache__/
 *.pyc
-# test hook
