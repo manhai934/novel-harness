@@ -12,3 +12,7 @@ rag/data/
 
 # 避免 node_modules 被误提交
 rag/node_modules/
+
+# Python 缓存
+__pycache__/
+*.pyc

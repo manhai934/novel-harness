@@ -10,7 +10,7 @@
 ```
 用户请求 → 任务路由器 → 检索请求构造器 → 混合召回
   ├─ SQLite FTS5 (关键词/标题/标签)
-  └─ 向量数据库 (语义相似度)
+  └─ 向量检索 (sentence-transformers 语义相似度)
   → 轻量重排器 → Context Pack Builder → Agent
 ```
 
@@ -30,49 +30,56 @@ rag/
 │   ├── metadata.db          # SQLite + FTS5
 │   └── vectors/             # 向量存储
 ├── src/
-│   ├── scanner.js           # 知识源扫描
-│   ├── normalizer.js        # 文档标准化
-│   ├── chunker.js           # 语义切块
-│   ├── embedder.js          # 向量嵌入生成
-│   ├── router.js            # 任务路由
-│   ├── retriever.js         # 混合检索 + 重排
-│   ├── context-pack.js      # Context Pack 构建
-│   ├── indexer.js           # 索引编排
-│   ├── server.js            # HTTP 服务
+│   ├── scanner.py           # 知识源扫描
+│   ├── normalizer.py        # 文档标准化
+│   ├── chunker.py           # 语义切块
+│   ├── embedder.py          # 向量嵌入生成
+│   ├── router.py            # 任务路由
+│   ├── retriever.py         # 混合检索 + 重排
+│   ├── context_pack.py      # Context Pack 构建
+│   ├── indexer.py           # 索引编排
+│   ├── server.py            # HTTP 服务 (FastAPI)
 │   └── storage/
-│       ├── sqlite-store.js  # SQLite + FTS5
-│       └── vector-store.js  # 向量存储抽象
+│       ├── sqlite_store.py  # SQLite + FTS5
+│       └── vector_store.py  # 向量存储抽象
 ├── scripts/
-│   ├── ingest.js            # 知识入库 CLI
-│   ├── build-index.js       # 索引构建 CLI
-│   └── query.js             # 查询 CLI
+│   ├── ingest.py            # 知识入库 CLI
+│   ├── build_index.py       # 索引构建 CLI
+│   └── query.py             # 查询 CLI
 └── test/
-    └── verify.js            # 验收测试
+    └── verify.py            # 验收测试
 ```
 
 ## 快速开始
 
+### 0. 安装依赖
+
+```bash
+pip install -r rag/requirements.txt
+```
+
+首次运行会自动下载 sentence-transformers 多语言模型（~100MB）。
+
 ### 1. 构建索引
 
 ```bash
-cd rag
-node scripts/build-index.js
+python rag/scripts/build_index.py
 ```
 
 ### 2. 查询测试
 
 ```bash
-node scripts/query.js "这段太像 AI 写的"
-node scripts/query.js "这个大纲后面能不能展开" --top-k 3
-node scripts/query.js "全民求生该先定哪条路线" --task-type genre_routing
+python rag/scripts/query.py "这段太像 AI 写的"
+python rag/scripts/query.py "这个大纲后面能不能展开" --top-k 3
+python rag/scripts/query.py "全民求生该先定哪条路线" --task-type genre_routing
 ```
 
 ### 3. 启动 HTTP 服务
 
 ```bash
-node src/server.js
+python rag/scripts/query.py --server
 # 或
-node scripts/query.js --server
+uvicorn rag.src.server:app --host 0.0.0.0 --port 3456
 ```
 
 默认端口 3456。
@@ -118,7 +125,7 @@ node scripts/query.js --server
 ## 重排公式
 
 ```
-最终分 = 语义分 × 0.45 + FTS分 × 0.20 + 任务匹配分 × 0.20 + priority权重 × 0.10 + source_type权重 × 0.05
+最终分 = 语义分 × 0.35 + FTS分 × 0.15 + 任务匹配分 × 0.30 + priority权重 × 0.12 + source_type权重 × 0.08
 ```
 
 ## 知识源范围 (V1)
@@ -130,8 +137,14 @@ node scripts/query.js --server
 ## 验收
 
 ```bash
-node test/verify.js
+python rag/test/verify.py
 ```
+
+## 嵌入策略
+
+1. **sentence-transformers**（首选）：`paraphrase-multilingual-MiniLM-L12-v2`，384 维，多语言支持
+2. **TF-IDF + sklearn**（回退）：纯本地统计嵌入，无需网络
+3. **哈希嵌入**（最后防线）：简单字符哈希
 
 ## 后续扩展
 
