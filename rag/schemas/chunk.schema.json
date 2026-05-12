@@ -1,0 +1,70 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Chunk",
+  "description": "块层：一个 chunk 只讲一个核心点",
+  "type": "object",
+  "required": ["chunk_id", "doc_id", "title", "chunk_type", "text", "category"],
+  "properties": {
+    "chunk_id": {
+      "type": "string",
+      "description": "唯一块标识，格式: {doc_id}#{section-ref}"
+    },
+    "doc_id": {
+      "type": "string",
+      "description": "所属文档 ID"
+    },
+    "title": {
+      "type": "string",
+      "description": "chunk 标题"
+    },
+    "chunk_type": {
+      "type": "string",
+      "enum": ["definition", "rule", "checklist", "procedure", "anti_pattern", "template", "example", "navigation"],
+      "description": "chunk 内容类型"
+    },
+    "text": {
+      "type": "string",
+      "description": "chunk 正文内容"
+    },
+    "category": {
+      "type": "string",
+      "description": "继承自文档的分类"
+    },
+    "stage": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "适用阶段列表"
+    },
+    "scope": {
+      "type": "string",
+      "enum": ["common", "project"],
+      "description": "作用域"
+    },
+    "tags": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "标签列表"
+    },
+    "priority": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 5,
+      "description": "优先级"
+    },
+    "source_type": {
+      "type": "string",
+      "enum": ["rule", "reference", "project"],
+      "description": "源文件类型"
+    },
+    "source_path": {
+      "type": "string",
+      "description": "源文件路径"
+    },
+    "heading_level": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 6,
+      "description": "chunk 所在标题层级"
+    }
+  }
+}

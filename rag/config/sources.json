@@ -1,0 +1,27 @@
+{
+  "description": "知识源配置：控制哪些路径允许进入知识库",
+  "version": "1.0.0",
+  "include_patterns": [
+    ".harness/skills/**/references/*.md",
+    ".harness/skills/**/rules/*.md",
+    ".harness/projects/*.md"
+  ],
+  "exclude_patterns": [
+    "planning/**",
+    "legacy-skills/**",
+    ".harness/agents/**",
+    ".harness/current-project.md",
+    ".harness/README.md",
+    ".harness/memory/**",
+    ".harness/cases/**",
+    ".harness/rules/**",
+    "node_modules/**",
+    "rag/**"
+  ],
+  "source_types": {
+    "reference": ".harness/skills/**/references/*.md",
+    "rule": ".harness/skills/**/rules/*.md",
+    "project": ".harness/projects/*.md"
+  },
+  "metadata_overrides": {}
+}

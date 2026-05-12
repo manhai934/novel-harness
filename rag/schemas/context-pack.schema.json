@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ContextPack",
+  "description": "上层 Agent 真正消费的知识上下文包",
+  "type": "object",
+  "required": ["task_type", "query", "results"],
+  "properties": {
+    "task_type": {
+      "type": "string",
+      "description": "路由后的任务类型"
+    },
+    "query": {
+      "type": "string",
+      "description": "原始查询"
+    },
+    "filters": {
+      "type": "object",
+      "description": "实际应用的过滤条件",
+      "properties": {
+        "categories": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "stages": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "results": {
+      "type": "array",
+      "description": "检索结果列表",
+      "items": {
+        "type": "object",
+        "required": ["chunk_id", "title", "score", "reason", "snippet"],
+        "properties": {
+          "chunk_id": { "type": "string" },
+          "title": { "type": "string" },
+          "score": { "type": "number" },
+          "reason": { "type": "string" },
+          "snippet": { "type": "string" },
+          "source_path": { "type": "string" },
+          "source_type": { "type": "string" },
+          "category": { "type": "string" },
+          "tags": {
+            "type": "array",
+            "items": { "type": "string" }
+          }
+        }
+      }
+    },
+    "meta": {
+      "type": "object",
+      "description": "检索元信息",
+      "properties": {
+        "total_candidates": { "type": "integer" },
+        "fts_count": { "type": "integer" },
+        "vector_count": { "type": "integer" },
+        "elapsed_ms": { "type": "number" }
+      }
+    }
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Document",
+  "description": "文档层：表示一份知识是什么",
+  "type": "object",
+  "required": ["doc_id", "title", "source_path", "source_type", "category", "stage", "scope"],
+  "properties": {
+    "doc_id": {
+      "type": "string",
+      "description": "唯一文档标识，格式: {category}.{short_name}",
+      "pattern": "^[a-z0-9._-]+$"
+    },
+    "title": {
+      "type": "string",
+      "description": "文档标题"
+    },
+    "source_path": {
+      "type": "string",
+      "description": "源文件相对路径"
+    },
+    "source_type": {
+      "type": "string",
+      "enum": ["rule", "reference", "project"],
+      "description": "源类型"
+    },
+    "category": {
+      "type": "string",
+      "description": "一级分类标识"
+    },
+    "stage": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "适用阶段列表"
+    },
+    "scope": {
+      "type": "string",
+      "enum": ["common", "project"],
+      "description": "作用域：common=通用知识, project=项目级"
+    },
+    "tags": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "标签列表"
+    },
+    "priority": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 5,
+      "description": "优先级 1(最高)-5(最低)"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["active", "deprecated"],
+      "default": "active"
+    }
+  }
+}

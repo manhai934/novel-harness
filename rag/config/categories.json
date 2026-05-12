@@ -1,0 +1,51 @@
+{
+  "description": "分类定义：用于 metadata 分类标记和路由过滤",
+  "version": "1.0.0",
+  "categories": {
+    "common.humanization": {
+      "label": "去AI味/语言自然化",
+      "description": "语言自然化、去AI味、语病诊断相关规则",
+      "sources": ["human-linguistics"]
+    },
+    "common.language": {
+      "label": "语言表达",
+      "description": "句式、语感、语言表达技巧",
+      "sources": ["human-linguistics"]
+    },
+    "common.rhythm": {
+      "label": "节奏/阅读体验",
+      "description": "章节节奏、阅读体验、疲劳点分析",
+      "sources": ["rhythm-review"]
+    },
+    "common.outline_review": {
+      "label": "大纲评估",
+      "description": "大纲质量评估、结构检查",
+      "sources": ["plot-review"]
+    },
+    "common.consistency": {
+      "label": "一致性检查",
+      "description": "角色、设定、逻辑一致性审查",
+      "sources": ["plot-review"]
+    },
+    "common.ideation": {
+      "label": "构思/灵感",
+      "description": "创作构思、灵感整理、组合",
+      "sources": ["plot-ideation"]
+    },
+    "common.prewrite": {
+      "label": "写前准备",
+      "description": "章节写前清单、写作准备流程",
+      "sources": ["plot-ideation"]
+    },
+    "common.outline": {
+      "label": "大纲/结构",
+      "description": "大纲结构、题材模板、项目选型",
+      "sources": ["game-datafied", "plot-ideation"]
+    },
+    "common.project": {
+      "label": "项目模板",
+      "description": "项目级别模板与题材边界",
+      "sources": ["game-datafied", "projects"]
+    }
+  }
+}

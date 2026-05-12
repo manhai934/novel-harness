@@ -1,0 +1,60 @@
+{
+  "description": "任务路由配置：根据任务类型决定 metadata 过滤条件",
+  "version": "1.0.0",
+  "routes": {
+    "ideation": {
+      "description": "构思发散：开脑洞、找题材方向、组合灵感",
+      "categories": ["common.ideation", "common.outline"],
+      "stages": ["ideation", "planning", "outline"],
+      "keywords": ["构思", "灵感", "开脑洞", "题材", "方向", "组合", "脑洞", "创意", "发散", "题材方向"],
+      "weight_boost": 1.2
+    },
+    "outline_review": {
+      "description": "大纲审查：评估大纲完整性、可行性、吸引力",
+      "categories": ["common.outline_review", "common.consistency"],
+      "stages": ["outline", "review", "planning"],
+      "keywords": ["大纲", "评估", "结构", "完整性", "可行性", "吸引力", "展开", "骨架", "整体"],
+      "weight_boost": 1.2
+    },
+    "chapter_prewrite": {
+      "description": "写前准备：一章之前该准备什么、清单、流程",
+      "categories": ["common.prewrite", "common.outline"],
+      "stages": ["prewrite", "drafting", "outline"],
+      "keywords": ["写前", "准备", "清单", "章节", "一章", "写作前", "开始写", "下笔", "规划章节"],
+      "weight_boost": 1.1
+    },
+    "humanization": {
+      "description": "去AI味：语言自然化、改掉总结腔/解释腔",
+      "categories": ["common.humanization", "common.language", "common.rhythm"],
+      "stages": ["drafting", "revision", "review"],
+      "keywords": ["AI", "去AI", "AI味", "总结腔", "解释腔", "自然", "修改", "润色", "阅读体验", "太工整", "太像AI", "人味", "套话", "结论句"],
+      "weight_boost": 1.2
+    },
+    "consistency_check": {
+      "description": "一致性检查：角色、设定、逻辑一致性",
+      "categories": ["common.consistency", "common.outline_review"],
+      "stages": ["drafting", "review", "revision"],
+      "keywords": ["一致性", "逻辑", "设定", "矛盾", "冲突", "角色行为", "世界观", "自洽", "检查", "漏洞"],
+      "weight_boost": 1.1
+    },
+    "rhythm_review": {
+      "description": "节奏审查：阅读体验、章节节奏、疲劳点",
+      "categories": ["common.rhythm", "common.outline_review", "common.humanization"],
+      "stages": ["drafting", "revision", "review"],
+      "keywords": ["节奏", "太平", "疲软", "推进", "爽点", "悬念", "高潮", "阅读体验", "疲劳", "拖", "水"],
+      "weight_boost": 1.1
+    },
+    "genre_routing": {
+      "description": "题材路由：选路线、定方向、确认题材边界",
+      "categories": ["common.project", "common.outline", "common.ideation"],
+      "stages": ["planning", "outline"],
+      "keywords": ["路线", "方向", "题材", "分支", "选型", "全民", "生存", "路线选择", "子题材", "定方向"],
+      "weight_boost": 1.2
+    }
+  },
+  "fallback": {
+    "description": "无法路由到具体任务类型时的默认行为",
+    "categories": [],
+    "stages": []
+  }
+}
