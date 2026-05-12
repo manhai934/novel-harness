@@ -1,0 +1,52 @@
+#!/bin/sh
+#
+# pre-push hook — 推送前需手动确认
+# 安装：git config core.hooksPath .githooks
+#
+
+# 只处理推送操作（非空运行）
+ZERO_COMMIT="0000000000000000000000000000000000000000"
+
+while read local_ref local_oid remote_ref remote_oid; do
+  # 跳过删除分支的推送
+  if [ "$local_oid" = "$ZERO_COMMIT" ]; then
+    continue
+  fi
+
+  # 获取分支名和远程信息
+  branch="${local_ref#refs/heads/}"
+  remote_branch="${remote_ref#refs/heads/}"
+
+  # 如果有新提交，显示摘要
+  if [ "$remote_oid" = "$ZERO_COMMIT" ]; then
+    # 新分支
+    commits=$(git log --oneline "$local_oid" 2>/dev/null | wc -l)
+    echo ""
+    echo "  ⏫ 推送新分支: $branch → 远程 $remote_branch ($commits 个提交)"
+  else
+    # 已有分支，显示增量提交
+    commits=$(git log --oneline "$remote_oid..$local_oid" 2>/dev/null | wc -l)
+    echo ""
+    echo "  ⏫ 推送分支: $branch → 远程 $remote_branch"
+    echo "  📝 新增提交: $commits 个"
+    echo ""
+    git log --oneline --no-decorate "$remote_oid..$local_oid" 2>/dev/null | sed 's/^/     /'
+  fi
+done
+
+echo ""
+echo "  ───────────────────────────────"
+echo "  是否推送以上内容到远程仓库？"
+echo "  ───────────────────────────────"
+printf "  [y/N] "
+read -r reply < /dev/tty
+
+if [ "$reply" != "y" ] && [ "$reply" != "Y" ]; then
+  echo ""
+  echo "  ✗ 已取消推送"
+  exit 1
+fi
+
+echo ""
+echo "  ✓ 继续推送..."
+exit 0
