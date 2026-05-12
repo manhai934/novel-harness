@@ -13,6 +13,7 @@
 - [Agent 体系](#agent-体系)
 - [创作管线](#创作管线)
 - [文件结构](#文件结构)
+- [RAG 知识检索层](#rag-知识检索层l3-数据层)
 - [状态与记忆系统](#状态与记忆系统)
 - [用户分层](#用户分层)
 - [项目自定义](#项目自定义)
@@ -46,8 +47,20 @@ L2（专业 Agent 层）
 L3（数据层）
    ├── 项目文件：projects/{项目名}/正文/ 状态/ 记忆/
    ├── 审查规则：game-datafied/ human-linguistics/ plot-review/ rhythm-review/
-   └── 案例库：cases/
+   ├── 案例库：cases/
+   └── **RAG 知识检索层：rag/ (混合检索 + Context Pack)**
 ```
+
+### 入口与目录边界
+
+当前系统不再把多个独立 skill 直接暴露给用户选择，而是收束为一个总编入口：
+
+- `README.md`：用户入口，说明项目怎么用、目录怎么理解。
+- `SKILL.md`：Agent 入口，由总编 Agent 识别需求、分派上下文/规划/写作/审稿任务。
+- `.harness/skills/`：Harness 内部能力模块，只由 Agent 或工作流按需调用；暂时保留 `skills` 命名，等旧版 skill 合并完成后再统一评估是否改名。
+- `legacy-skills/`：旧版导入 skill 资产，不作为当前主入口；其中有价值的市场扫描、题材分析、写作/审稿资料，后续逐步迁移到 Harness 模块或 RAG 参考库。
+
+这种收束是一次架构升级：用户不需要在大量 skill 中猜该调用哪一个，只需要描述目标，由总编 Agent 负责判断该走哪条流程、加载哪些模块和参考资料。
 
 ---
 
@@ -244,12 +257,90 @@ novel-harness/
 │   ├── memory/                       ← 记忆系统模板
 │   └── cases/                        ← 案例/反馈
 │
-├── skills/                           ← 其他独立 skill
+├── rag/                              ← ★ L3 知识检索层
+│   ├── src/                          ← 索引、检索、路由、服务
+│   ├── scripts/                      ← 构建/查询 CLI
+│   ├── config/                       ← 知识源/路由配置
+│   ├── test/                         ← 验收测试
+│   └── OPERATIONS.md                 ← 操作手册
+│
+├── rag/                             ← L3 知识检索层（RAG）
+│   ├── src/                          ← 索引、检索、路由、服务
+│   ├── scripts/                      ← 构建/查询 CLI
+│   ├── config/                       ← 知识源/路由配置
+│   ├── test/                         ← 验收测试
+│   └── OPERATIONS.md                 ← 操作手册
+├── legacy-skills/                    ← 旧版导入 skill 资产（保留待迁移）
 └── planning/                         ← 规划文档
 ```
 
 > `.workspace/` 旧入口已废弃；当前项目指针统一使用 `.harness/current-project.md`。
 > `projects/` 会随仓库保留为空目录，但其中具体小说正文、设定、状态和记忆文件默认被 `.gitignore` 忽略，不上传到远程。
+> `legacy-skills/` 不是当前主入口。当前主入口是根目录 `README.md` 和 `SKILL.md`；旧版 skill 中有价值的市场扫描、题材分析、写作/审稿资料，后续逐步迁移到 Harness 模块或 RAG 参考库。
+> `.harness/skills/` 是内部模块目录，当前仍被 Agent 文档引用；在旧版 skill 合并完成前暂不改名，避免同时引入两条迁移线。
+
+---
+
+## RAG 知识检索层（L3 数据层）
+
+RAG（Retrieval-Augmented Generation）层是 Agent 的"知识外脑"——为写作过程中各类任务提供即时的知识检索服务。
+
+### 解决的问题
+
+- **Agent 遗忘**：长篇写作中，Agent 容易忘记之前用过的规则和知识
+- **知识分散**：规则、参考、模板分散在 `.harness/skills/` 各目录，Agent 难以快速定位
+- **上下文窗口限制**：无法把所有参考文档塞进 prompt，需要精准检索
+
+### 能力
+
+```
+Agent 查询
+    │
+    ├── "这段太像 AI 写的"     → 去AI味最小修改指南（Top-1）
+    ├── "这个大纲能展开吗"      → 大纲质量评估清单
+    ├── "写之前该准备什么"      → 章节写前准备清单
+    ├── "全民求生选哪条路线"    → 子题材规则入口
+    └── "角色状态有没有矛盾"    → 状态一致性补充清单
+```
+
+### 快速使用
+
+```bash
+# 安装
+pip install -r rag/requirements.txt
+
+# 构建索引（首次 + 每次知识源变更后）
+python rag/scripts/build_index.py
+
+# 查询
+python rag/scripts/query.py "这段太像 AI 写的"
+
+# 启动 HTTP 服务（Agent 通过 API 调用）
+python rag/scripts/query.py --server
+# → 监听 http://localhost:3456
+# → POST /retrieve 检索  |  POST /reindex 重建索引
+# → GET /health 健康检查 | GET /stats 索引统计
+
+# 验收
+python rag/test/verify.py
+```
+
+### 架构要点
+
+| 维度 | 说明 |
+|------|------|
+| 索引来源 | `.harness/skills/**/rules/*.md`、`references/*.md`、`.harness/projects/*.md` |
+| 索引规模 | 23 篇文档 → 233 个语义块 → 233 个向量（384 维） |
+| 嵌入引擎 | sentence-transformers（多语言模型，首选）/ TF-IDF 统计嵌入（回退） |
+| 存储引擎 | SQLite + FTS5 全文索引 / JSON 文件向量索引 |
+| 检索方式 | metadata 硬过滤 → FTS5 关键词召回 → 向量语义召回 → 加权重排 |
+| 任务路由 | 7 种写作任务类型自动识别（humanization / outline_review / chapter_prewrite 等） |
+| 输出格式 | Context Pack（结构化 JSON + 纯文本，可直接注入 Agent prompt） |
+| API 端点 | 6 个（retrieve / reindex / health / stats / routes / explain-retrieval） |
+
+### 更多
+
+详细操作说明见 `rag/OPERATIONS.md`。
 
 ---
 
