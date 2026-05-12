@@ -4,8 +4,6 @@
 > 目标：支持 100-200 万字量级的连载创作，解决 AI 写作中的遗忘和幻觉问题。
 > 核心理念：**写小说不是一个 skill，是一个 Agent 系统。**
 
-[![LINUXDO](https://img.shields.io/badge/%E7%A4%BE%E5%8C%BA-LINUXDO-0086c9?style=for-the-badge&labelColor=555555)](https://linux.do)
-
 ---
 
 ## 一句话
@@ -34,6 +32,20 @@ python rag/scripts/build_index.py
 你："没灵感"
 系统：委派规划 Agent，提供 3-5 个剧情方向
 ```
+
+---
+
+## 文档导航
+
+| 你想了解什么 | 去这里 |
+|-------------|--------|
+| 系统设计思路、L0-L3 分层详解 | [docs/architecture.md](docs/architecture.md) |
+| 5 个 Agent 各负责什么、怎么协作 | [docs/agents.md](docs/agents.md) |
+| 写一章的完整流程、200 万字创作周期 | [docs/pipeline.md](docs/pipeline.md) |
+| 状态/记忆/上下文包怎么工作 | [docs/pipeline.md](docs/pipeline.md) |
+| 开始写作前的准备、项目自定义 | [docs/usage.md](docs/usage.md) |
+| Git 工作流、与普通 Skill 的区别 | [docs/usage.md](docs/usage.md) |
+| RAG 安装、API 调用、故障排查 | [rag/OPERATIONS.md](rag/OPERATIONS.md) |
 
 ---
 
@@ -66,28 +78,23 @@ novel-harness/
 │   ├── projects/               ← 项目约束模板
 │   └── memory/                 ← 记忆系统模板
 ├── projects/                   ← 你的小说项目（正文/大纲/状态/记忆）
-├── rag/                        ← ★ RAG 知识检索层
-│   ├── src/                    ← 索引、检索、路由、HTTP 服务
-│   └── OPERATIONS.md           ← RAG 操作手册
+├── rag/                        ← ★ RAG 知识检索层（操作手册）
+│   └── OPERATIONS.md
 └── docs/                       ← 详细文档
+    ├── architecture.md         ← 系统架构
+    ├── agents.md               ← Agent 体系
+    ├── pipeline.md             ← 创作管线
+    └── usage.md                ← 使用指南
 ```
 
----
-
-## 文档导航
-
-| 你想了解什么 | 去这里 |
-|-------------|--------|
-| 系统设计思路、L0-L3 分层详解 | `docs/architecture.md` |
-| 5 个 Agent 各负责什么、怎么协作 | `docs/agents.md` |
-| 写一章的完整流程、200 万字创作周期 | `docs/pipeline.md` |
-| 状态/记忆/上下文包怎么工作 | `docs/pipeline.md` |
-| 开始写作前的准备、项目自定义 | `docs/usage.md` |
-| Git 工作流、与普通 Skill 的区别 | `docs/usage.md` |
-| RAG 安装、API 调用、故障排查 | `rag/OPERATIONS.md` |
+> 点击目录名直接跳转：· [docs/](docs/architecture.md) · [rag/](rag/OPERATIONS.md) · [.harness/agents/](.harness/agents/上下文Agent.md) ·
 
 ---
 
 ## 致谢
 
-感谢 **`linux.do`** 社区的讨论、分享与支持。感谢 [oh-story-claudecode](https://github.com/worldwonderer/oh-story-claudecode) 和 [webnovel-writer](https://github.com/lingfengQAQ/webnovel-writer) 给我的启发。
+[![LINUXDO](https://img.shields.io/badge/%E7%A4%BE%E5%8C%BA-LINUXDO-0086c9?style=for-the-badge&labelColor=555555)](https://linux.do)
+
+感谢 **`linux.do`** 社区的讨论、分享与支持。这个项目在方法论整理、实践思路和持续迭代上，都受益于社区氛围与成员交流。
+
+感谢 [oh-story-claudecode](https://github.com/worldwonderer/oh-story-claudecode) 和 [webnovel-writer](https://github.com/lingfengQAQ/webnovel-writer) 给我的启发，前者是我入门老师，后者是我从 skill 进化到 harness 后的进一步完善方向，都给我提供了很多思路。
