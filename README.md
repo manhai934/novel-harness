@@ -10,6 +10,16 @@
 
 novel-harness 是一个**四层 Agent 系统**，不是普通的写作工具。你告诉它"帮我写一章"，它自动完成：状态打包 → 正文生成 → 归档更新 → 质量审查 → 结果呈现。
 
+## 详细文档
+
+| 文档 | 内容 |
+|------|------|
+| [docs/architecture.md](docs/architecture.md) | 四层架构详解、文件结构、入口与目录边界 |
+| [docs/agents.md](docs/agents.md) | 总编 + 4 个专业 Agent 职责与协作流程 |
+| [docs/pipeline.md](docs/pipeline.md) | 单章流水线、200 万字创作周期、状态与记忆系统 |
+| [docs/usage.md](docs/usage.md) | 使用指南、RAG 安装、项目自定义、Git 工作流 |
+| [rag/OPERATIONS.md](rag/OPERATIONS.md) | RAG 安装部署、API 调用、故障排查 |
+
 ## 快速开始
 
 ```bash
@@ -65,19 +75,6 @@ novel-harness/
 │   └── OPERATIONS.md           ← 操作手册
 └── docs/                       ← 详细文档
 ```
-
----
-
-## 详细文档
-
-| 文档 | 内容 |
-|------|------|
-| [docs/architecture.md](docs/architecture.md) | 四层架构详解、文件结构、入口与目录边界 |
-| [docs/agents.md](docs/agents.md) | 总编 + 4 个专业 Agent 职责与协作流程 |
-| [docs/pipeline.md](docs/pipeline.md) | 单章流水线、200 万字创作周期、状态与记忆系统 |
-| [docs/usage.md](docs/usage.md) | 使用指南、RAG 安装、项目自定义、Git 工作流 |
-| [rag/OPERATIONS.md](rag/OPERATIONS.md) | RAG 安装部署、API 调用、故障排查 |
-
 ---
 
 ## 致谢
