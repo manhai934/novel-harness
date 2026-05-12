@@ -50,9 +50,6 @@
 git init
 git add .
 git commit -m "init: 项目初始化"
-
-# 激活推送确认钩子（后续每次 git push 会询问是否确认）
-git config core.hooksPath .githooks
 ```
 
 ### 每章完成后的本地记录

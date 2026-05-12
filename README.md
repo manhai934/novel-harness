@@ -30,9 +30,6 @@ cd novel-harness
 # 安装 RAG 知识检索依赖
 pip install -r rag/requirements.txt
 python rag/scripts/build_index.py
-
-# 激活推送确认钩子（推送前会询问是否确认）
-git config core.hooksPath .githooks
 ```
 
 ### 创建小说项目
