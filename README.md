@@ -6,7 +6,7 @@
 
 ---
 
-## 一句话
+## 一句话介绍
 
 novel-harness 是一个**四层 Agent 系统**，不是普通的写作工具。你告诉它"帮我写一章"，它自动完成：状态打包 → 正文生成 → 归档更新 → 质量审查 → 结果呈现。
 
@@ -25,27 +25,10 @@ python rag/scripts/build_index.py
 ```
 
 ```
-你："帮我写第二章"
-系统：上下文打包 → 写作 Agent 写正文 → 归档更新 → 审稿 → 呈现结果
-你："帮我审稿"
-系统：委派审稿 Agent，检查语感/情节/节奏/题材
-你："没灵感"
-系统：委派规划 Agent，提供 3-5 个剧情方向
+你："帮我写第二章"   → 上下文打包 → 写作 → 归档 → 审稿
+你："帮我审稿"       → 委派审稿 Agent，检查语感/情节/节奏/题材
+你："没灵感"         → 委派规划 Agent，提供 3-5 个剧情方向
 ```
-
----
-
-## 文档导航
-
-| 你想了解什么 | 去这里 |
-|-------------|--------|
-| 系统设计思路、L0-L3 分层详解 | [docs/architecture.md](docs/architecture.md) |
-| 5 个 Agent 各负责什么、怎么协作 | [docs/agents.md](docs/agents.md) |
-| 写一章的完整流程、200 万字创作周期 | [docs/pipeline.md](docs/pipeline.md) |
-| 状态/记忆/上下文包怎么工作 | [docs/pipeline.md](docs/pipeline.md) |
-| 开始写作前的准备、项目自定义 | [docs/usage.md](docs/usage.md) |
-| Git 工作流、与普通 Skill 的区别 | [docs/usage.md](docs/usage.md) |
-| RAG 安装、API 调用、故障排查 | [rag/OPERATIONS.md](rag/OPERATIONS.md) |
 
 ---
 
@@ -78,16 +61,22 @@ novel-harness/
 │   ├── projects/               ← 项目约束模板
 │   └── memory/                 ← 记忆系统模板
 ├── projects/                   ← 你的小说项目（正文/大纲/状态/记忆）
-├── rag/                        ← ★ RAG 知识检索层（操作手册）
-│   └── OPERATIONS.md
+├── rag/                        ← ★ RAG 知识检索层
+│   └── OPERATIONS.md           ← 操作手册
 └── docs/                       ← 详细文档
-    ├── architecture.md         ← 系统架构
-    ├── agents.md               ← Agent 体系
-    ├── pipeline.md             ← 创作管线
-    └── usage.md                ← 使用指南
 ```
 
-> 点击目录名直接跳转：· [docs/](docs/architecture.md) · [rag/](rag/OPERATIONS.md) · [.harness/agents/](.harness/agents/上下文Agent.md) ·
+---
+
+## 详细文档
+
+| 文档 | 内容 |
+|------|------|
+| [docs/architecture.md](docs/architecture.md) | 四层架构详解、文件结构、入口与目录边界 |
+| [docs/agents.md](docs/agents.md) | 总编 + 4 个专业 Agent 职责与协作流程 |
+| [docs/pipeline.md](docs/pipeline.md) | 单章流水线、200 万字创作周期、状态与记忆系统 |
+| [docs/usage.md](docs/usage.md) | 使用指南、RAG 安装、项目自定义、Git 工作流 |
+| [rag/OPERATIONS.md](rag/OPERATIONS.md) | RAG 安装部署、API 调用、故障排查 |
 
 ---
 
