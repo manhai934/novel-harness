@@ -10,7 +10,7 @@
 
 novel-harness 是一个**四层 Agent 系统**，不是普通的写作工具。你告诉它"帮我写一章"，它自动完成：状态打包 → 正文生成 → 归档更新 → 质量审查 → 结果呈现。
 
-## 详细文档
+## 文档导航
 
 - [系统架构](docs/architecture.md) — L0-L3 分层、入口边界
 - [Agent 体系](docs/agents.md) — 总编与 4 个 Agent 职责与协作
