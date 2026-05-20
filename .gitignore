@@ -5,6 +5,7 @@ projects/*
 .claude/
 .cursor/
 planning/
+legacy-skills/
 
 # RAG 运行时数据（SQLite 索引、向量文件）
 rag/data/

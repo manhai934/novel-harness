@@ -1,1 +1,0 @@
-../../story-short-write/references/genre-writing-formulas.md
