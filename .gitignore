@@ -4,7 +4,6 @@ projects/*
 
 .claude/
 .cursor/
-docs/
 planning/
 
 # RAG 运行时数据（SQLite 索引、向量文件）
