@@ -10,6 +10,14 @@
 
 novel-harness 是一个**四层 Agent 系统**，不是普通的写作工具。你告诉它"帮我写一章"，它自动完成：状态打包 → 正文生成 → 归档更新 → 质量审查 → 结果呈现。
 
+## 去 AI 化效果示例
+
+`human-linguistics` 模块用于把偏工整、解释感重的 AI 文风，调整成更接近真人网文作者的叙述口气。
+
+| 优化前 | 优化后 |
+|:---:|:---:|
+| ![去 AI 化优化前](docs/assets/deslop-before.png) | ![去 AI 化优化后](docs/assets/deslop-after.png) |
+
 ## 文档导航
 
 - [系统架构](docs/architecture.md) — L0-L3 分层、入口边界
