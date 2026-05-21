@@ -58,7 +58,22 @@
 
 ---
 
-## 3. 架构与文档
+## 3. RAG 参考检索
+
+RAG 用来检索项目里的题材参考、去 AI 味规则、审稿规则和案例文档。参考资料越多，它越能帮 Agent 找到合适的拆书样本、题材规则和人性化写法。
+
+第一次写小说可以先不启用 RAG；当你开始积累题材参考、拆书资料、去 AI 化案例后，建议安装并重建索引：
+
+```powershell
+pip install -r rag/requirements.txt
+python rag/scripts/build_index.py
+```
+
+详细说明见：[RAG 操作手册](rag/OPERATIONS.md)
+
+---
+
+## 4. 架构与文档
 
 - [系统架构](docs/architecture.md)
 - [Agent 体系](docs/agents.md)
@@ -97,7 +112,7 @@ skills/novel-core/SKILL.md       # /novel-core 安装入口
 
 ---
 
-## 4. 去 AI 化效果示例
+## 5. 去 AI 化效果示例
 
 `human-linguistics` 模块用于把偏工整、解释感重的 AI 文风，调整成更接近真人网文作者的叙述口气。
 
@@ -107,7 +122,7 @@ skills/novel-core/SKILL.md       # /novel-core 安装入口
 
 ---
 
-## 5. 目录说明
+## 6. 目录说明
 
 ```text
 novel-harness/
@@ -126,19 +141,6 @@ novel-harness/
 ```
 
 小说正文项目不随仓库上传。开始创作时，Agent 会在本地使用或创建 `projects/{项目名}/`，用于存放正文、大纲、设定、状态和记忆文件。
-
----
-
-## 6. 关于 RAG
-
-RAG 用来检索项目里的题材参考、去 AI 味规则、审稿规则和案例文档。第一次写小说不需要先启动 RAG，等参考资料变多后再启用。
-
-```powershell
-pip install -r rag/requirements.txt
-python rag/scripts/build_index.py
-```
-
-详细说明见：[RAG 操作手册](rag/OPERATIONS.md)
 
 ---
 
