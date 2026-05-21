@@ -20,7 +20,7 @@ L2（阶段触发）← game-datafied / human-linguistics / plot-review …
    └── 各子模块按需加载
 
 L3（按需查询）← cases/ + projects/
-   └── 案例库 / 小说项目设定 / 角色档案 / 数值体系
+   └── 案例库 / 小说项目设定 / 角色档案 / 能力与资源体系
 ```
 
 ---

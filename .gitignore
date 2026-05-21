@@ -7,6 +7,9 @@ projects/*
 planning/
 legacy-skills/
 
+# 当前小说项目指针，只保留在本地
+.harness/current-project.md
+
 # RAG 运行时数据（SQLite 索引、向量文件）
 rag/data/
 
