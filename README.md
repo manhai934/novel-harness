@@ -34,6 +34,28 @@
 - **管上下文**：维护角色状态、章节摘要、伏笔、事件索引
 - **沉淀参考**：把题材样本、拆书规则、去 AI 化规则放入 RAG 检索
 
+复制即用：
+
+```text
+/novel-core 帮我创建一本全民求生小说
+/novel-core 帮我规划黄金三章
+/novel-core 写第一章
+```
+
+```text
+/novel-core 续写下一章
+/novel-core 按当前大纲写一段正文
+/novel-core 继续写，但保持主角状态和伏笔一致
+```
+
+```text
+/novel-core 帮我审稿
+/novel-core 查一下逻辑问题和节奏问题
+/novel-core 这章哪里像 AI，帮我改自然
+```
+
+只说“帮我写小说”时，系统不会直接乱写正文，而是先进入开书规划，确认题材、主角、世界观和开局方向。
+
 ---
 
 ## 3. 架构与文档
@@ -75,37 +97,7 @@ skills/novel-core/SKILL.md       # /novel-core 安装入口
 
 ---
 
-## 4. 复制即用
-
-### 开一本新书
-
-```text
-/novel-core 帮我创建一本全民求生小说
-/novel-core 帮我规划黄金三章
-/novel-core 写第一章
-```
-
-### 继续写同一本书
-
-```text
-/novel-core 续写下一章
-/novel-core 按当前大纲写一段正文
-/novel-core 继续写，但保持主角状态和伏笔一致
-```
-
-### 审稿和去 AI 味
-
-```text
-/novel-core 帮我审稿
-/novel-core 查一下逻辑问题和节奏问题
-/novel-core 这章哪里像 AI，帮我改自然
-```
-
-只说“帮我写小说”时，系统不会直接乱写正文，而是先进入开书规划，确认题材、主角、世界观和开局方向。
-
----
-
-## 5. 去 AI 化效果示例
+## 4. 去 AI 化效果示例
 
 `human-linguistics` 模块用于把偏工整、解释感重的 AI 文风，调整成更接近真人网文作者的叙述口气。
 
@@ -115,7 +107,7 @@ skills/novel-core/SKILL.md       # /novel-core 安装入口
 
 ---
 
-## 6. 目录说明
+## 5. 目录说明
 
 ```text
 novel-harness/
@@ -123,20 +115,21 @@ novel-harness/
 ├── AGENTS.md                  # Codex / OpenCode 入口规则
 ├── CLAUDE.md                  # Claude Code / Cursor 可参考入口规则
 ├── skills/novel-core/         # 可安装的 Codex Skill 入口
-├── scripts/install-skill.ps1  # Codex Skill 安装脚本
 ├── .harness/                  # 核心 Agent、规则、模板
 │   ├── agents/                # 总编 / 规划 / 写作 / 审稿 / 上下文 Agent
 │   ├── skills/                # 题材、语感、情节、节奏模块
-│   ├── projects/              # 小说项目约束模板
+│   ├── project-templates/     # 小说项目约束模板
 │   └── memory/                # 章节、角色、伏笔、事件记忆模板
-├── projects/                  # 本地小说正文项目，默认不提交 Git
 ├── rag/                       # 轻量 RAG 检索模块
-└── docs/                      # 详细文档
+└── docs/                      # 详细文档与可选安装脚本
+    └── scripts/install-skill.ps1
 ```
+
+小说正文项目不随仓库上传。开始创作时，Agent 会在本地使用或创建 `projects/{项目名}/`，用于存放正文、大纲、设定、状态和记忆文件。
 
 ---
 
-## 7. 关于 RAG
+## 6. 关于 RAG
 
 RAG 用来检索项目里的题材参考、去 AI 味规则、审稿规则和案例文档。第一次写小说不需要先启动 RAG，等参考资料变多后再启用。
 

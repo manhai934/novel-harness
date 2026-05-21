@@ -43,7 +43,7 @@
 | `../../projects/{项目}/记忆/事件索引.md` | 事件索引（读写） |
 | `../../projects/{项目}/记忆/章节摘要/` | 每章摘要（写） |
 | `../../projects/{项目}/正文/` | 已完成的正文（读取参考） |
-| `../projects/模板-{题材}.md` | 项目约束（读取） |
+| `../project-templates/模板-{题材}.md` | 项目约束（读取） |
 
 ---
 
@@ -100,7 +100,7 @@
   上下文 Agent 启动：
 
   Step 1: 读取项目约束
-    → .harness/projects/模板-{题材}.md
+    → .harness/project-templates/模板-{题材}.md
     → 当前阶段的约束列表
 
   Step 2: 读取主角状态

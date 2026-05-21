@@ -10,7 +10,7 @@
 ```
 L0（项目上下文）← .harness/
    ├── 项目选择：当前在写哪本小说
-   ├── 世界观注入：加载对应的 projects/ 目录
+   ├── 世界观注入：加载本地 projects/{项目名}/ 目录
    └── 创作约束：本项目的底线规则
 
 L1（常驻层）← .harness/agents/总编Agent.md
@@ -19,7 +19,7 @@ L1（常驻层）← .harness/agents/总编Agent.md
 L2（阶段触发）← game-datafied / human-linguistics / plot-review …
    └── 各子模块按需加载
 
-L3（按需查询）← cases/ + projects/
+L3（按需查询）← cases/ + 本地 projects/
    └── 案例库 / 小说项目设定 / 角色档案 / 能力与资源体系
 ```
 
@@ -30,5 +30,5 @@ L3（按需查询）← cases/ + projects/
 每次开始写作或审稿时：
 1. Agent 读取 `current-project.md`，确认当前项目
 2. 如果没有记录或用户想换项目 → 引导用户设置
-3. 加载 `projects/` 下对应项目模板中的创作约束
+3. 加载 `.harness/project-templates/` 下对应项目模板中的创作约束，并按需读取本地 `projects/{项目名}/`
 4. 注入世界观设定 → 进入 L1 审稿流程

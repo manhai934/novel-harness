@@ -18,7 +18,7 @@
 
 ## 项目自定义
 
-每个小说项目有自己的创作约束模板，位于 `.harness/projects/`。
+每个小说项目有自己的创作约束模板，位于 `.harness/project-templates/`。
 
 ### 预置模板
 
@@ -54,10 +54,12 @@ git commit -m "init: 项目初始化"
 
 ### 每章完成后的本地记录
 
-`projects/` 下的具体创作内容默认不提交到远程。若你只在本地管理小说版本，可以继续用 Git 记录：
+`projects/` 是本地创作目录，默认被仓库忽略，不提交到远程。开始创作时，Agent 会使用或创建 `projects/{项目名}/` 存放正文、设定、状态和记忆。
+
+若你确实想给某本小说单独做版本管理，更建议在 `projects/{项目名}/` 内单独初始化一个 Git 仓库；如果一定要用当前仓库记录，需要手动 `git add -f`：
 
 ```bash
-git add projects/{项目名}/正文/  projects/{项目名}/状态/  projects/{项目名}/记忆/
+git add -f projects/{项目名}/正文/  projects/{项目名}/状态/  projects/{项目名}/记忆/
 git commit -m "Ch{N}: {章节标题} — {一句话钩子}"
 ```
 

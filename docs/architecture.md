@@ -25,7 +25,7 @@ L2（专业 Agent 层）
    └── 文件：agents/*.md
 
 L3（数据层）
-   ├── 项目文件：projects/{项目名}/正文/ 状态/ 记忆/
+   ├── 本地项目文件：projects/{项目名}/正文/ 状态/ 记忆/（不随仓库上传）
    ├── 审查规则：game-datafied/ human-linguistics/ plot-review/ rhythm-review/
    ├── 案例库：cases/
    └── RAG 知识检索层：rag/ (混合检索 + Context Pack)
@@ -36,7 +36,7 @@ L3（数据层）
 最底层，定义"当前在写什么"。
 
 - `.harness/current-project.md`：指向当前激活的小说项目
-- `.harness/projects/`：各题材的创作约束模板（成长曲线、防膨胀策略等）
+- `.harness/project-templates/`：各题材的创作约束模板（成长曲线、防膨胀策略等）
 - 所有上层 Agent 在做出决策前都会读取 L0 的约束
 
 ### L1 — 总编层
@@ -91,26 +91,10 @@ novel-harness/
 ├── AGENTS.md                          ← Codex / OpenCode 项目入口规则
 ├── CLAUDE.md                          ← Claude Code / Cursor 可参考入口规则
 ├── skills/novel-core/                 ← Codex Skill 安装入口
-├── scripts/install-skill.ps1          ← Skill 安装脚本
-│
-├── projects/                         ← 小说项目（你的创作内容）
-│   ├── .gitkeep                      ← 仅用于保留目录
-│   └── {项目名}/                     ← 本地创作内容，默认不上传
-│       ├── 正文/                     ← 已完成的章节
-│       ├── 大纲/                     ← 创作蓝图
-│       ├── 设定/                     ← 世界观/数值/角色设定
-│       ├── 状态/                     ← ★ 上下文 Agent 维护
-│       │   ├── 主角.md               ← 主角当前状态
-│       │   ├── 角色/                 ← 配角状态
-│       │   └── 伏笔登记表.md         ← 伏笔生命周期
-│       └── 记忆/                     ← ★ 上下文 Agent 维护
-│           ├── 事件索引.md           ← 重大事件按章索引
-│           ├── 章节摘要/             ← 每章 200 字摘要
-│           └── 风格参考.md           ← 最近 N 章风格特征
 │
 ├── .harness/                         ← Harness 核心工程系统
 │   ├── current-project.md            ← 当前项目指针
-│   ├── projects/                     ← 项目约束模板
+│   ├── project-templates/            ← 项目约束模板
 │   ├── agents/
 │   │   ├── 总编Agent.md              ← L1 协调层
 │   │   ├── 上下文Agent.md            ← 记忆中枢
@@ -138,7 +122,8 @@ novel-harness/
 │   ├── architecture.md               ← 本文
 │   ├── agents.md                     ← Agent 体系
 │   ├── pipeline.md                   ← 创作管线
-│   └── usage.md                      ← 使用指南
+│   ├── usage.md                      ← 使用指南
+│   └── scripts/install-skill.ps1      ← 可选 Skill 本地安装脚本
 │
 └── legacy-skills/                    ← 旧版导入 skill 资产（保留待迁移）
 ```
@@ -146,6 +131,6 @@ novel-harness/
 ### 重要注释
 
 - `.workspace/` 旧入口已废弃；当前项目指针统一使用 `.harness/current-project.md`
-- `projects/` 会随仓库保留为空目录，但其中具体小说正文、设定、状态和记忆文件默认被 `.gitignore` 忽略，不上传到远程
+- `projects/{项目名}/` 是本地创作目录，仓库不保留空目录占位；开始创作时由 Agent 或用户在本地创建
 - `legacy-skills/` 不是当前主入口。当前主入口是根目录 `README.md`、`AGENTS.md`、`CLAUDE.md`、`skills/novel-core/` 和 `.harness/agents/总编Agent.md`
 - `.harness/skills/` 是内部模块目录，当前仍被 Agent 文档引用

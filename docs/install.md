@@ -23,7 +23,7 @@
 如果 AI 工具是 Codex，可以让它执行：
 
 ```text
-请在当前仓库执行 `scripts/install-skill.ps1`，把 `skills/novel-core/` 安装到 Codex 的 skills 目录。
+请在当前仓库执行 `docs/scripts/install-skill.ps1`，把 `skills/novel-core/` 安装到 Codex 的 skills 目录。
 安装后确认 `~/.codex/skills/novel-core/SKILL.md` 存在。
 ```
 
@@ -51,7 +51,7 @@
 ```powershell
 git clone https://github.com/manhai934/novel-harness.git
 cd novel-harness
-powershell -ExecutionPolicy Bypass -File scripts/install-skill.ps1
+powershell -ExecutionPolicy Bypass -File docs/scripts/install-skill.ps1
 ```
 
 ## 验证

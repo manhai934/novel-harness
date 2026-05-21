@@ -38,7 +38,7 @@
 | `../skills/plot-ideation/references/公共灵感整理与组合.md` | 灵感分型、情感内核、组合排序 | 用户给出零散灵感时 |
 | `../skills/plot-ideation/references/章节写前准备清单.md` | 把章节目标落成写前输入包 | 细化到章级规划时 |
 | `../skills/plot-review/rules/大纲质量评估清单.md` | 规划后的快速自检 | 做全书/卷/章纲方案时 |
-| `../projects/模板-{题材}.md` | 项目创作约束 | 获取当前项目的底线规则 |
+| `../project-templates/模板-{题材}.md` | 项目创作约束 | 获取当前项目的底线规则 |
 | `../../projects/{项目}/设定/` | 世界观/角色/能力体系/资源体系 | 设定扩展类任务 |
 | `../../projects/{项目}/正文.md` | 最新章节内容 | 理解故事当前位置 |
 

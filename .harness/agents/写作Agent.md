@@ -42,7 +42,7 @@
 |:-----|:------|:---------|
 | `../../projects/{项目}/设定/` | 世界观/数值/角色设定 | 每次写作任务 |
 | `../../projects/{项目}/正文.md` | 前文参考（保持风格一致） | 写续写章节时 |
-| `../projects/模板-{题材}.md` | 项目创作约束 | 每次写作任务 |
+| `../project-templates/模板-{题材}.md` | 项目创作约束 | 每次写作任务 |
 | `../skills/plot-ideation/references/章节写前准备清单.md` | 写前准备清单 | 章节目标已知但输入仍散时 |
 | `../skills/human-linguistics/rules/` | 语感规则（防AI味） | 每次写作任务 |
 | `../skills/human-linguistics/rules/去AI味最小修改指南.md` | 去AI味最小改写顺序 | 初稿完成后的轻量自然化 |

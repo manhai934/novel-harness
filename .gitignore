@@ -1,6 +1,5 @@
-# 小说项目内容（保留目录，占位文件可上传；具体创作内容只本地保留）
-projects/*
-!projects/.gitkeep
+# 小说项目内容只保留在本地，创作时再创建 projects/{项目名}/
+projects/
 
 .claude/
 .cursor/
