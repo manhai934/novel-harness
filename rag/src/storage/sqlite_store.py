@@ -1,15 +1,9 @@
 """
-sqlite_store.py — SQLite + FTS5 存储层
-
-基于 Python 内置 sqlite3，无需任何额外安装。
-提供 metadata 持久化 + FTS5 全文索引。
-
-数据库文件位置：rag/data/metadata.db
+sqlite_store.py - SQLite + FTS5 存储层。
 """
 
-import sqlite3
 import json
-import os
+import sqlite3
 import threading
 from pathlib import Path
 
@@ -20,7 +14,6 @@ _thread_local = threading.local()
 
 
 def _get_db():
-    """获取当前线程的数据库连接（延迟初始化）"""
     conn = getattr(_thread_local, "connection", None)
     if conn is not None:
         return conn
@@ -37,7 +30,6 @@ def _get_db():
 
 
 def initialize():
-    """初始化数据库表"""
     db = _get_db()
 
     db.executescript("""
@@ -45,7 +37,7 @@ def initialize():
             doc_id TEXT PRIMARY KEY,
             title TEXT NOT NULL,
             source_path TEXT NOT NULL,
-            source_type TEXT NOT NULL CHECK(source_type IN ('rule', 'reference', 'project')),
+            source_type TEXT NOT NULL CHECK(source_type IN ('knowledge', 'rule', 'reference', 'project')),
             category TEXT NOT NULL,
             stage TEXT NOT NULL DEFAULT '[]',
             scope TEXT NOT NULL DEFAULT 'common',
@@ -73,7 +65,6 @@ def initialize():
         );
     """)
 
-    # FTS5 全文索引
     try:
         db.executescript("""
             CREATE VIRTUAL TABLE IF NOT EXISTS chunks_fts USING fts5(
@@ -87,10 +78,9 @@ def initialize():
 
             INSERT INTO chunks_fts(chunks_fts) VALUES('rebuild');
         """)
-    except sqlite3.OperationalError as e:
-        print(f"[sqlite_store] FTS5 初始化警告: {e}")
+    except sqlite3.OperationalError as exc:
+        print(f"[sqlite_store] FTS5 初始化警告: {exc}")
 
-    # 索引
     try:
         db.executescript("""
             CREATE INDEX IF NOT EXISTS idx_chunks_category ON chunks(category);
@@ -104,7 +94,6 @@ def initialize():
 
 
 def upsert_document(doc):
-    """插入或更新文档"""
     db = _get_db()
     db.execute(
         """INSERT OR REPLACE INTO documents
@@ -127,7 +116,6 @@ def upsert_document(doc):
 
 
 def insert_chunks(chunks):
-    """批量插入 chunks（事务）"""
     db = _get_db()
 
     insert_chunk_sql = """INSERT OR REPLACE INTO chunks
@@ -170,43 +158,36 @@ def insert_chunks(chunks):
 
 
 def _row_to_dict(row):
-    """将 sqlite3.Row 转为 dict，并解析 JSON 字段"""
     if row is None:
         return None
-    d = dict(row)
+
+    result = dict(row)
     for field in ("stage", "tags"):
-        if field in d and isinstance(d[field], str):
+        if field in result and isinstance(result[field], str):
             try:
-                d[field] = json.loads(d[field])
+                result[field] = json.loads(result[field])
             except (json.JSONDecodeError, TypeError):
                 pass
-    return d
+    return result
 
 
 def fts_search(query, top_n=15):
-    """FTS5 全文搜索
-
-    对 CJK 文本，将中文拆成单字用 AND 连接以提高精确度，
-    英文/数字词用引号做精确匹配。
-    """
     db = _get_db()
 
-    # 构建 FTS5 查询
     terms = []
-    for t in query.split():
-        t = t.strip()
-        if not t:
+    for term in query.split():
+        term = term.strip()
+        if not term:
             continue
-        # 中文为主的词：拆成单字用 AND 连接
-        if any("一" <= c <= "鿿" for c in t):
-            chars = [c for c in t if "一" <= c <= "鿿"]
+
+        if any("\u4e00" <= char <= "\u9fff" for char in term):
+            chars = [char for char in term if "\u4e00" <= char <= "\u9fff"]
             if chars:
                 terms.append(" AND ".join(chars))
             else:
-                terms.append(t)
+                terms.append(term)
         else:
-            # 英文/数字词：加引号精确匹配
-            terms.append(f'"{t}"')
+            terms.append(f'"{term}"')
 
     if not terms:
         return []
@@ -228,17 +209,16 @@ def fts_search(query, top_n=15):
 
         results = []
         for row in rows:
-            d = _row_to_dict(row)
-            d["fts_score"] = row["fts_score"]
-            results.append(d)
+            item = _row_to_dict(row)
+            item["fts_score"] = row["fts_score"]
+            results.append(item)
         return results
-    except sqlite3.OperationalError as e:
-        print(f"[sqlite_store] FTS 搜索出错: {e}")
+    except sqlite3.OperationalError as exc:
+        print(f"[sqlite_store] FTS 搜索失败: {exc}")
         return []
 
 
 def filter_chunks(categories=None, stages=None, top_n=20):
-    """metadata 过滤查询"""
     db = _get_db()
     conditions = []
     params = []
@@ -249,11 +229,11 @@ def filter_chunks(categories=None, stages=None, top_n=20):
         params.extend(categories)
 
     if stages:
-        stage_conds = []
-        for s in stages:
-            stage_conds.append("c.stage LIKE ?")
-            params.append(f'%"{s}"%')
-        conditions.append(f"({' OR '.join(stage_conds)})")
+        stage_conditions = []
+        for stage in stages:
+            stage_conditions.append("c.stage LIKE ?")
+            params.append(f'%"{stage}"%')
+        conditions.append(f"({' OR '.join(stage_conditions)})")
 
     where = f"WHERE {' AND '.join(conditions)}" if conditions else ""
 
@@ -267,14 +247,13 @@ def filter_chunks(categories=None, stages=None, top_n=20):
             (*params, top_n),
         ).fetchall()
 
-        return [_row_to_dict(r) for r in rows]
-    except sqlite3.OperationalError as e:
-        print(f"[sqlite_store] 过滤查询出错: {e}")
+        return [_row_to_dict(row) for row in rows]
+    except sqlite3.OperationalError as exc:
+        print(f"[sqlite_store] 过滤查询失败: {exc}")
         return []
 
 
 def get_chunk_by_id(chunk_id):
-    """按 chunk_id 获取单条"""
     db = _get_db()
     try:
         row = db.execute("SELECT * FROM chunks WHERE chunk_id = ?", (chunk_id,)).fetchone()
@@ -284,13 +263,12 @@ def get_chunk_by_id(chunk_id):
 
 
 def clear_all():
-    """清空所有数据"""
     db = _get_db()
     try:
         db.executescript("""
-            DELETE FROM chunks_fts;
-            DELETE FROM chunks;
-            DELETE FROM documents;
+            DROP TABLE IF EXISTS chunks_fts;
+            DROP TABLE IF EXISTS chunks;
+            DROP TABLE IF EXISTS documents;
         """)
         db.commit()
     except sqlite3.OperationalError:
@@ -298,7 +276,6 @@ def clear_all():
 
 
 def get_stats():
-    """获取统计信息"""
     db = _get_db()
     try:
         doc_count = db.execute("SELECT COUNT(*) as count FROM documents").fetchone()["count"]
@@ -309,7 +286,6 @@ def get_stats():
 
 
 def close():
-    """关闭当前线程的数据库连接"""
     conn = getattr(_thread_local, "connection", None)
     if conn is not None:
         try:
@@ -320,6 +296,4 @@ def close():
 
 
 def close_all():
-    """关闭所有线程的连接（仅用于清理）"""
-    # 由于 thread-local 设计，各线程连接各自管理
     close()

@@ -31,7 +31,7 @@ def main():
 
     print(f"\n扫描到 {len(files)} 个知识文件:\n")
 
-    by_type = {"rule": 0, "reference": 0, "project": 0}
+    by_type = {"knowledge": 0, "rule": 0, "reference": 0, "project": 0}
     for f in files:
         by_type[f["source_type"]] = by_type.get(f["source_type"], 0) + 1
 

@@ -5,7 +5,7 @@
     "common.humanization": {
       "label": "去AI味/语言自然化",
       "description": "语言自然化、去AI味、语病诊断相关规则",
-      "sources": ["human-linguistics"]
+      "sources": ["human-linguistics", "knowledge.deslop"]
     },
     "common.language": {
       "label": "语言表达",
@@ -30,7 +30,7 @@
     "common.ideation": {
       "label": "构思/灵感",
       "description": "创作构思、灵感整理、组合",
-      "sources": ["plot-ideation"]
+      "sources": ["plot-ideation", "knowledge.writing"]
     },
     "common.prewrite": {
       "label": "写前准备",
@@ -40,12 +40,12 @@
     "common.outline": {
       "label": "大纲/结构",
       "description": "大纲结构、题材模板、项目选型",
-      "sources": ["game-datafied", "plot-ideation"]
+      "sources": ["game-datafied", "plot-ideation", "knowledge.topics"]
     },
     "common.project": {
       "label": "项目模板",
       "description": "项目级别模板与题材边界",
-      "sources": ["game-datafied", "projects"]
+      "sources": ["game-datafied", "project-templates", "knowledge.market"]
     }
   }
 }

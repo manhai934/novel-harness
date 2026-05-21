@@ -62,6 +62,15 @@
 
 RAG 用来检索项目里的题材参考、去 AI 味规则、审稿规则和案例文档。参考资料越多，它越能帮 Agent 找到合适的拆书样本、题材规则和人性化写法。
 
+内置知识包位于 `.harness/knowledge/builtin/`，后续 MCP 下载的扩展知识包会进入 `.harness/knowledge/remote/`，再由 RAG 在本地构建索引。
+
+查看当前知识包：
+
+```powershell
+python rag/scripts/sync_packs.py list
+python rag/scripts/sync_packs.py installed
+```
+
 第一次写小说可以先不启用 RAG；当你开始积累题材参考、拆书资料、去 AI 化案例后，建议安装并重建索引：
 
 ```powershell
@@ -69,7 +78,7 @@ pip install -r rag/requirements.txt
 python rag/scripts/build_index.py
 ```
 
-详细说明见：[RAG 操作手册](rag/OPERATIONS.md)
+详细说明见：[知识包说明](docs/knowledge-packs.md)、[MCP 知识包服务设计](docs/mcp-knowledge-service.md)、[RAG 操作手册](rag/OPERATIONS.md)
 
 ---
 
@@ -79,6 +88,8 @@ python rag/scripts/build_index.py
 - [Agent 体系](docs/agents.md)
 - [创作管线](docs/pipeline.md)
 - [项目自定义与 Git 工作流](docs/usage.md)
+- [知识包说明](docs/knowledge-packs.md)
+- [MCP 知识包服务设计](docs/mcp-knowledge-service.md)
 - [RAG 操作手册](rag/OPERATIONS.md)
 
 `novel-harness` 不是单个提示词，而是一套四层创作管线：
@@ -97,6 +108,7 @@ L2  专业 Agent
     上下文 Agent：管理角色、伏笔、章节状态
 
 L3  规则与知识层
+    .harness/knowledge/ 内置知识包、远程知识包、用户私有知识包入口
     .harness/skills/ 题材规则、语感规则、情节规则、节奏规则
     rag/             题材参考、拆书资料、去 AI 化经验的检索层
 ```
@@ -107,6 +119,7 @@ L3  规则与知识层
 skills/novel-core/SKILL.md       # /novel-core 安装入口
 .harness/agents/总编Agent.md     # 真正的总编调度规则
 .harness/agents/                 # 规划 / 写作 / 审稿 / 上下文 Agent
+.harness/knowledge/              # 可被 RAG 检索的全局知识包
 .harness/skills/                 # 题材、语感、情节、节奏规则
 ```
 
@@ -132,6 +145,7 @@ novel-harness/
 ├── skills/novel-core/         # 可安装的 Codex Skill 入口
 ├── .harness/                  # 核心 Agent、规则、模板
 │   ├── agents/                # 总编 / 规划 / 写作 / 审稿 / 上下文 Agent
+│   ├── knowledge/             # 内置知识包、远程知识包、用户私有知识包入口
 │   ├── skills/                # 题材、语感、情节、节奏模块
 │   ├── project-templates/     # 小说项目约束模板
 │   └── memory/                # 章节、角色、伏笔、事件记忆模板

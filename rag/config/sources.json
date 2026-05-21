@@ -2,13 +2,16 @@
   "description": "知识源配置：控制哪些路径允许进入知识库",
   "version": "1.0.0",
   "include_patterns": [
+    ".harness/knowledge/builtin/**/*.md",
+    ".harness/knowledge/remote/**/*.md",
     ".harness/skills/**/references/*.md",
     ".harness/skills/**/rules/*.md",
-    ".harness/projects/*.md"
+    ".harness/project-templates/*.md"
   ],
   "exclude_patterns": [
     "planning/**",
     "legacy-skills/**",
+    ".harness/knowledge/user/**",
     ".harness/agents/**",
     ".harness/current-project.md",
     ".harness/README.md",
@@ -19,9 +22,10 @@
     "rag/**"
   ],
   "source_types": {
+    "knowledge": ".harness/knowledge/**/*.md",
     "reference": ".harness/skills/**/references/*.md",
     "rule": ".harness/skills/**/rules/*.md",
-    "project": ".harness/projects/*.md"
+    "project": ".harness/project-templates/*.md"
   },
   "metadata_overrides": {}
 }

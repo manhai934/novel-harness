@@ -43,6 +43,7 @@
 | `../../projects/{项目}/设定/` | 世界观/数值/角色设定 | 每次写作任务 |
 | `../../projects/{项目}/正文.md` | 前文参考（保持风格一致） | 写续写章节时 |
 | `../project-templates/模板-{题材}.md` | 项目创作约束 | 每次写作任务 |
+| `../knowledge/` | 全局知识包（builtin/remote） | 需要具体题材语感、平台口气、场景细节时通过 RAG 查询 |
 | `../skills/plot-ideation/references/章节写前准备清单.md` | 写前准备清单 | 章节目标已知但输入仍散时 |
 | `../skills/human-linguistics/rules/` | 语感规则（防AI味） | 每次写作任务 |
 | `../skills/human-linguistics/rules/去AI味最小修改指南.md` | 去AI味最小改写顺序 | 初稿完成后的轻量自然化 |
@@ -54,6 +55,14 @@
 - `../agents/规划Agent.md` —— 不规划
 - `../skills/plot-review/SKILL.md` —— 不检查情节逻辑
 - `../skills/rhythm-review/SKILL.md` —— 不分析节奏
+
+---
+
+## 知识包缺口提示
+
+当正文生成需要具体题材语感、场景细节、道具/资源循环或平台口气时，先检查上下文包或 RAG 是否已有对应知识包。若没有，向总编 Agent 建议通过 MCP 安装对应知识包并重建 RAG 索引。
+
+不要临场编造大量题材规则，避免污染正文风格。
 
 ---
 

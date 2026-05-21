@@ -30,11 +30,11 @@ def route_query(query):
 
     通过关键词重叠度评分，选择得分最高的任务类型。
 
-    Args:
+    参数：
         query: 用户查询文本
 
-    Returns:
-        dict with task_type, categories, stages, filters, confidence, description
+    返回：
+        包含 task_type、categories、stages、filters、confidence、description 的字典
     """
     routes = _load_routes()
     if not routes:
@@ -77,7 +77,7 @@ def route_query(query):
                     score += len(kw_lower) * 0.5
                     matched.append(kw)
 
-        # boost 权重
+        # 路由加权
         boost = route.get("weight_boost", 1.0)
         score *= boost
 
@@ -108,11 +108,11 @@ def route_query(query):
 def get_route(task_type):
     """直接获取指定任务类型的路由配置
 
-    Args:
+    参数：
         task_type: 任务类型名称
 
-    Returns:
-        dict with categories, stages, filters, description
+    返回：
+        包含 categories、stages、filters、description 的字典
     """
     routes = _load_routes()
     route = routes.get(task_type)

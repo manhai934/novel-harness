@@ -20,7 +20,7 @@
     },
     "source_type": {
       "type": "string",
-      "enum": ["rule", "reference", "project"],
+      "enum": ["knowledge", "rule", "reference", "project"],
       "description": "源类型"
     },
     "category": {

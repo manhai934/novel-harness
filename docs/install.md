@@ -16,6 +16,7 @@
 4. 如果当前工具支持 Skill 目录，请把 `skills/novel-core/` 安装到该工具的 Skills 目录。
 5. 如果当前工具不支持 Skill 安装，请把本项目作为工作目录打开，并按 `AGENTS.md` 或 `CLAUDE.md` 路由。
 6. 安装后请验证：能找到 `skills/novel-core/SKILL.md`，能找到 `.harness/agents/总编Agent.md`。
+7. 如需启用内置 RAG 知识包，请按 `docs/knowledge-packs.md` 安装依赖并重建索引。
 ```
 
 ## Codex 安装方式
@@ -31,6 +32,12 @@
 
 ```text
 /novel-core 帮我写小说
+```
+
+可选启用 RAG 知识包：
+
+```text
+请阅读 docs/knowledge-packs.md，帮我构建 novel-harness 的内置知识包索引。
 ```
 
 ## Claude Code / Cursor / OpenCode 使用方式

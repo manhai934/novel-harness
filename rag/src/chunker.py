@@ -64,12 +64,12 @@ def _detect_chunk_type(text, heading_level):
 def _split_long_section(text, max_chars=900):
     """将过长的文本在子项处分割
 
-    Args:
+    参数：
         text: 段文本
         max_chars: 最大字符数
 
-    Returns:
-        list of str
+    返回：
+        字符串列表
     """
     if len(text) <= max_chars:
         return [text]
@@ -80,7 +80,7 @@ def _split_long_section(text, max_chars=900):
     current = []
 
     for line in lines:
-        current_len = sum(len(l) for l in current) + len(current) - 1  # newlines
+        current_len = sum(len(l) for l in current) + len(current) - 1  # 换行符数量
 
         if current_len + len(line) > max_chars and current:
             # 在列表项处分割
@@ -117,11 +117,11 @@ def _clean_text(text):
 def chunk_markdown(document):
     """将 document 按 heading 分割为 chunks
 
-    Args:
-        document: normalize_document 返回的 dict（含 _raw_content）
+    参数：
+        document: normalize_document 返回的字典（含 _raw_content）
 
-    Returns:
-        list of chunk dicts
+    返回：
+        chunk 字典列表
     """
     content = document.get("_raw_content", "")
     if not content:

@@ -1,0 +1,18 @@
+{
+  "schema": 1,
+  "updated_at": "2026-05-21",
+  "description": "远程知识包 manifest 示例。实际地址由 MCP 或同步脚本配置。",
+  "base_url": "https://example.com/novel-harness/packs",
+  "packs": [
+    {
+      "id": "survival-topic",
+      "name": "全民求生题材包",
+      "version": "1.0.0",
+      "category": "topics",
+      "url": "survival-topic-1.0.0.zip",
+      "checksum": "sha256:REPLACE_WITH_REAL_CHECKSUM",
+      "license": "CC BY-NC-SA 4.0",
+      "tags": ["全民求生", "庇护所", "资源循环"]
+    }
+  ]
+}

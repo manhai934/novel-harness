@@ -31,7 +31,9 @@
    - `.harness/skills/human-linguistics/SKILL.md`
    - `.harness/skills/human-linguistics/rules/去AI味最小修改指南.md`
    - `.harness/skills/human-linguistics/rules/语病诊断手册.md`
-   - 题材相关参考文件，如求生、电竞等 references。
+   - `.harness/knowledge/` 中已安装的题材、写作、去 AI 化知识包。
+   - 题材相关参考文件，如求生、电竞等 skill 内部 references。
+6. 如果缺少对应题材或平台风格知识包，提示用户可通过 MCP 下载额外知识包，并重建 RAG 索引后继续。
 
 ## 写小说请求的默认行为
 

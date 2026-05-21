@@ -109,22 +109,32 @@ python rag/scripts/query.py --server
 
 | 指标 | 值 |
 |------|----|
-| 索引文档 | 23 篇 |
-| Chunks | 233 段 |
+| 索引文档 | 随本地知识包变化，以 `build_index.py` 输出为准 |
+| Chunks | 随本地知识包变化，以 `build_index.py` 输出为准 |
 | 向量维度 | 384 |
 | 检索耗时 | ~50ms |
 | API 端口 | 3456 |
-| 验收测试 | 68 项全通过 |
+| 验收测试 | 运行 `python rag/test/verify.py` |
 
 ---
 
 ## 知识源
 
+- `.harness/knowledge/builtin/**/*.md` — 随仓库发布的内置知识包
+- `.harness/knowledge/remote/**/*.md` — MCP 下载的远程知识包
 - `.harness/skills/**/references/*.md` — 参考文档
 - `.harness/skills/**/rules/*.md` — 规则文档
-- `.harness/projects/*.md` — 项目模板
+- `.harness/project-templates/*.md` — 项目模板
 
 修改这些文件后，需要重建索引：`python rag/scripts/build_index.py`
+
+知识包管理：
+
+```bash
+python rag/scripts/sync_packs.py list
+python rag/scripts/sync_packs.py installed
+python rag/scripts/sync_packs.py --manifest <manifest路径或URL> install <pack_id> --rebuild-index
+```
 
 ## 验收
 

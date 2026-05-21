@@ -27,8 +27,8 @@ def build_full_index():
     6. 构建 TF-IDF 词表（用于回退嵌入）
     7. 为所有 chunk 生成向量，写入向量存储
 
-    Returns:
-        dict with documents, chunks, vectors
+    返回：
+        包含 documents、chunks、vectors 的统计字典
     """
     start_time = time.time()
     print("=" * 50)

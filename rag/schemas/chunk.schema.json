@@ -53,7 +53,7 @@
     },
     "source_type": {
       "type": "string",
-      "enum": ["rule", "reference", "project"],
+      "enum": ["knowledge", "rule", "reference", "project"],
       "description": "源文件类型"
     },
     "source_path": {

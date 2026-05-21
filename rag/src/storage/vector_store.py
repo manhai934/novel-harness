@@ -17,7 +17,7 @@ VECTORS_PATH = VECTORS_DIR / "vectors.json"
 
 VECTOR_DIM = 384
 
-# 内存存储: {chunk_id: {"vector": [...], "text": str, ...}}
+# 内存存储结构: {chunk_id: {"vector": [...], "text": str, ...}}
 _vectors = {}
 _loaded = False
 
@@ -65,8 +65,8 @@ def cosine_similarity(vec_a, vec_b):
 def insert_vectors(chunk_vectors):
     """批量插入向量
 
-    Args:
-        chunk_vectors: list of {"chunk_id": str, "vector": list[float], "text": str}
+    参数：
+        chunk_vectors: 形如 {"chunk_id": str, "vector": list[float], "text": str} 的列表
     """
     _ensure_loaded()
     for item in chunk_vectors:
@@ -80,12 +80,12 @@ def insert_vectors(chunk_vectors):
 def vector_search(query_vector, top_n=15):
     """余弦相似度搜索
 
-    Args:
-        query_vector: list[float]
+    参数：
+        query_vector: 查询向量
         top_n: 返回数量
 
-    Returns:
-        list of {"chunk_id": str, "score": float}
+    返回：
+        形如 {"chunk_id": str, "score": float} 的列表
     """
     _ensure_loaded()
     if not _vectors:

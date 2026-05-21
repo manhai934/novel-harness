@@ -19,8 +19,8 @@ L1（常驻层）← .harness/agents/总编Agent.md
 L2（阶段触发）← game-datafied / human-linguistics / plot-review …
    └── 各子模块按需加载
 
-L3（按需查询）← cases/ + 本地 projects/
-   └── 案例库 / 小说项目设定 / 角色档案 / 能力与资源体系
+L3（按需查询）← knowledge/ + cases/ + 本地 projects/
+   └── 知识包 / 案例库 / 小说项目设定 / 角色档案 / 能力与资源体系
 ```
 
 ---
@@ -31,4 +31,5 @@ L3（按需查询）← cases/ + 本地 projects/
 1. Agent 读取 `current-project.md`，确认当前项目
 2. 如果没有记录或用户想换项目 → 引导用户设置
 3. 加载 `.harness/project-templates/` 下对应项目模板中的创作约束，并按需读取本地 `projects/{项目名}/`
-4. 注入世界观设定 → 进入 L1 审稿流程
+4. 需要题材、写法、平台风格参考时，通过 RAG 查询 `.harness/knowledge/` 和 `.harness/skills/`
+5. 注入世界观设定 → 进入 L1 审稿流程

@@ -8,7 +8,7 @@ embedder.py — 向量嵌入生成器
 
 架构设计：
 - 统一接口 embed_text / embed_batch
-- VectorStore 不感知 embedding 实现细节
+- 向量存储层不感知嵌入实现细节
 - 模型加载为延迟加载（首次调用时初始化）
 """
 
@@ -44,7 +44,7 @@ _STOP_WORDS = {
 def tokenize(text):
     """智能中文分词（兼顾词汇和语义覆盖）
 
-    - 汉字提取为 unigram + bigram
+    - 汉字提取为单字词和相邻双字词
     - 英文/数字保留原词
     - 过滤停用词
     """
@@ -59,7 +59,7 @@ def tokenize(text):
         if "一" <= ch <= "鿿":
             if ch not in _STOP_WORDS:
                 tokens.append(ch)
-                # bigram
+                # 相邻双字词
                 if i + 1 < len(text) and "一" <= text[i + 1] <= "鿿":
                     bigram = text[i : i + 2]
                     if bigram not in _STOP_WORDS:
@@ -121,8 +121,8 @@ def _transformer_embed(texts):
 def build_vocabulary(corpus, max_vocab=20000):
     """从语料构建 TF-IDF 向量器
 
-    Args:
-        corpus: list of str
+    参数：
+        corpus: 字符串列表
         max_vocab: 最大词表大小
     """
     global _tfidf_vectorizer, _tfidf_built
@@ -151,7 +151,7 @@ def build_vocabulary(corpus, max_vocab=20000):
 def _tfidf_embed(texts):
     """TF-IDF 向量化"""
     if _tfidf_vectorizer is None:
-        raise RuntimeError("TF-IDF vectorizer not built. Call build_vocabulary() first.")
+        raise RuntimeError("TF-IDF 向量器尚未构建，请先调用 build_vocabulary()。")
 
     if isinstance(texts, str):
         texts = [texts]
@@ -168,11 +168,11 @@ def embed_text(text):
 
     优先使用 sentence-transformers，失败则回退到 TF-IDF。
 
-    Args:
-        text: str
+    参数：
+        text: 待嵌入文本
 
-    Returns:
-        list[float] — 384 维向量
+    返回：
+        384 维向量
     """
     if not _model_attempted:
         _try_load_transformer()
@@ -190,7 +190,7 @@ def embed_text(text):
 
 
 def embed_batch(texts):
-    """批量生成 embeddings"""
+    """批量生成嵌入向量"""
     if not isinstance(texts, (list, tuple)):
         texts = [texts]
 

@@ -137,23 +137,38 @@ python rag/scripts/build_index.py
 [2/7] 初始化数据库...
    OK 数据库已初始化
 [3/7] 扫描知识文件...
-   OK 扫描到 23 个文件
+   OK 扫描到 N 个文件
 [4/7] 标准化文档...
-   OK 23 篇文档已入库
+   OK N 篇文档已入库
 [5/7] 文档分块...
-   OK 233 个 chunks 已入库
+   OK N 个 chunks 已入库
 [6/7] 构建统计嵌入词表...
    OK 词表构建完成
 [7/7] 生成向量嵌入...
-   OK 233 个向量已存储
+   OK N 个向量已存储
 
 ==================================================
   索引构建完成! (44.65s)
-  文档: 23
-  Chunks: 233
-  向量: 233
+  文档: N
+  Chunks: N
+  向量: N
 ==================================================
 ```
+
+### 知识包管理
+
+```bash
+# 查看内置知识包
+python rag/scripts/sync_packs.py list
+
+# 查看已安装的远程知识包
+python rag/scripts/sync_packs.py installed
+
+# 从远程 manifest 安装知识包，并在安装后重建索引
+python rag/scripts/sync_packs.py --manifest <manifest路径或URL> install <pack_id> --rebuild-index
+```
+
+`sync_packs.py` 是 MCP 知识包服务的本地执行层。后续 MCP 工具会封装这些命令，用来完成 list/install/remove/rebuild。
 
 ### 何时需要重建索引
 
@@ -161,7 +176,9 @@ python rag/scripts/build_index.py
 |------|------|
 | 首次部署 | `python rag/scripts/build_index.py` |
 | 新增/修改了 `.harness/skills/` 中的规则或参考文档 | 调用 `POST /reindex` 或运行 build_index |
-| 新增项目模板（`.harness/projects/*.md`） | 同上 |
+| 新增内置知识包（`.harness/knowledge/builtin/**/*.md`） | 同上 |
+| 新增远程知识包（`.harness/knowledge/remote/**/*.md`） | 同上 |
+| 新增项目模板（`.harness/project-templates/*.md`） | 同上 |
 | 索引损坏/数据异常 | 同上 |
 | 日常启动服务前 | 不需要重建，已有索引自动可用 |
 
@@ -323,7 +340,7 @@ python rag/scripts/query.py --server
       }
     ],
     "knowledge_summary": "检索到 5 条相关知识点",
-    "source_breakdown": {"rule": 2, "reference": 2, "project": 1},
+    "source_breakdown": {"rule": 2, "knowledge": 1, "reference": 2, "project": 1},
     "meta": {
       "total_candidates": 30,
       "elapsed_ms": 58,
@@ -600,7 +617,7 @@ text = context_pack_to_text(pack)
 
 | 路径 | 职责 |
 |------|------|
-| `rag/src/scanner.py` | 扫描 `.harness/skills/**/rules/, references/` 和 `.harness/projects/` |
+| `rag/src/scanner.py` | 扫描 `.harness/knowledge/`、`.harness/skills/**/rules/, references/` 和 `.harness/project-templates/` |
 | `rag/src/normalizer.py` | 读取 Markdown，提取 metadata（doc_id, category, stage, tags, priority） |
 | `rag/src/chunker.py` | 按 heading 分割文档为语义块（300-900 字），检测 chunk_type |
 | `rag/src/embedder.py` | 三层嵌入引擎：sentence-transformers → TF-IDF → hash |
