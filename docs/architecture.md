@@ -15,7 +15,7 @@ L0（项目上下文）
 L1（总编层）
    ├── 理解需求 → 分派任务 → 协调流程
    ├── 不执行具体工作，只做调度和质量管理
-   └── 文件：SKILL.md
+   └── 文件：.harness/agents/总编Agent.md
 
 L2（专业 Agent 层）
    ├── 上下文 Agent — 状态管理 + 信息打包
@@ -43,7 +43,7 @@ L3（数据层）
 
 系统入口。唯一直接面对用户的层。
 
-- 定义在 `SKILL.md` 中
+- 定义在 `.harness/agents/总编Agent.md` 中
 - 接收用户的自然语言需求，理解意图，分派给对应的 L2 Agent
 - 不做具体执行，只做调度和质量管理
 
@@ -73,7 +73,8 @@ L3（数据层）
 系统不再把多个独立 skill 直接暴露给用户选择，而是收束为一个总编入口：
 
 - `README.md`：用户入口，说明项目怎么用、目录怎么理解。
-- `SKILL.md`：Agent 入口，由总编 Agent 识别需求、分派上下文/规划/写作/审稿任务。
+- `skills/novel-core/SKILL.md`：Codex Skill 安装入口，负责触发 `/novel-core` 并路由到总编 Agent。
+- `.harness/agents/总编Agent.md`：Agent 核心入口，由总编 Agent 识别需求、分派上下文/规划/写作/审稿任务。
 - `.harness/skills/`：Harness 内部能力模块，只由 Agent 或工作流按需调用。
 - `legacy-skills/`：旧版导入 skill 资产，不作为当前主入口。其中有价值的资料后续逐步迁移到 Harness 模块或 RAG 参考库。
 
@@ -85,6 +86,12 @@ L3（数据层）
 
 ```
 novel-harness/
+│
+├── README.md                          ← 用户入口
+├── AGENTS.md                          ← Codex / OpenCode 项目入口规则
+├── CLAUDE.md                          ← Claude Code / Cursor 可参考入口规则
+├── skills/novel-core/                 ← Codex Skill 安装入口
+├── scripts/install-skill.ps1          ← Skill 安装脚本
 │
 ├── projects/                         ← 小说项目（你的创作内容）
 │   ├── .gitkeep                      ← 仅用于保留目录
@@ -101,11 +108,11 @@ novel-harness/
 │           ├── 章节摘要/             ← 每章 200 字摘要
 │           └── 风格参考.md           ← 最近 N 章风格特征
 │
-├── SKILL.md                          ← 总编 Agent 定义（L1 协调层）
 ├── .harness/                         ← Harness 核心工程系统
 │   ├── current-project.md            ← 当前项目指针
 │   ├── projects/                     ← 项目约束模板
 │   ├── agents/
+│   │   ├── 总编Agent.md              ← L1 协调层
 │   │   ├── 上下文Agent.md            ← 记忆中枢
 │   │   ├── 规划Agent.md              ← 剧情构思
 │   │   ├── 写作Agent.md              ← 正文生成
@@ -140,5 +147,5 @@ novel-harness/
 
 - `.workspace/` 旧入口已废弃；当前项目指针统一使用 `.harness/current-project.md`
 - `projects/` 会随仓库保留为空目录，但其中具体小说正文、设定、状态和记忆文件默认被 `.gitignore` 忽略，不上传到远程
-- `legacy-skills/` 不是当前主入口。当前主入口是根目录 `README.md` 和 `SKILL.md`
+- `legacy-skills/` 不是当前主入口。当前主入口是根目录 `README.md`、`AGENTS.md`、`CLAUDE.md`、`skills/novel-core/` 和 `.harness/agents/总编Agent.md`
 - `.harness/skills/` 是内部模块目录，当前仍被 Agent 文档引用

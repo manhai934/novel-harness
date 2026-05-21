@@ -13,7 +13,7 @@ L0（项目上下文）← .harness/
    ├── 世界观注入：加载对应的 projects/ 目录
    └── 创作约束：本项目的底线规则
 
-L1（常驻层）← SKILL.md
+L1（常驻层）← .harness/agents/总编Agent.md
    └── Agent 定义 + 启动流程 + 任务分类 + 通用审稿规则
 
 L2（阶段触发）← game-datafied / human-linguistics / plot-review …
