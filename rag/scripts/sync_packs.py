@@ -22,7 +22,7 @@ PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
 PACKS_DIR = PROJECT_ROOT / ".harness" / "knowledge" / "packs"
 REMOTE_DIR = PROJECT_ROOT / ".harness" / "knowledge" / "remote"
 INCLUDED_MANIFEST = PACKS_DIR / "included.manifest.json"
-DEFAULT_REMOTE_MANIFEST = PACKS_DIR / "remote.example.json"
+DEFAULT_REMOTE_MANIFEST = "http://47.103.57.247:9000/manifest"
 
 ALLOWED_EXTENSIONS = {".md", ".txt", ".json", ".yaml", ".yml"}
 
@@ -253,6 +253,11 @@ def rebuild_index(_args):
 
 
 def main():
+    if hasattr(sys.stdout, "reconfigure"):
+        sys.stdout.reconfigure(encoding="utf-8")
+    if hasattr(sys.stderr, "reconfigure"):
+        sys.stderr.reconfigure(encoding="utf-8")
+
     parser = argparse.ArgumentParser(description="同步 novel-harness 知识包")
     parser.add_argument("--manifest", help="远程 manifest 路径或 URL")
     parser.add_argument("--json", action="store_true", help="以 JSON 格式输出")

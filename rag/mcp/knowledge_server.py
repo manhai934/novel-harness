@@ -102,7 +102,7 @@ TOOLS = {
         "inputSchema": {
             "type": "object",
             "properties": {
-                "manifest_url": {"type": "string", "description": "Server manifest URL."},
+                "manifest_url": {"type": "string", "description": "Optional server manifest URL. Defaults to the project knowledge-pack market."},
                 "include_remote": {"type": "boolean", "default": True},
             },
         },
@@ -120,7 +120,7 @@ TOOLS = {
             "required": ["pack_id"],
             "properties": {
                 "pack_id": {"type": "string"},
-                "manifest_url": {"type": "string"},
+                "manifest_url": {"type": "string", "description": "Optional server manifest URL. Defaults to the project knowledge-pack market."},
                 "rebuild_index": {"type": "boolean", "default": True},
             },
         },
@@ -133,7 +133,7 @@ TOOLS = {
             "required": ["pack_id"],
             "properties": {
                 "pack_id": {"type": "string"},
-                "manifest_url": {"type": "string"},
+                "manifest_url": {"type": "string", "description": "Optional server manifest URL. Defaults to the project knowledge-pack market."},
                 "rebuild_index": {"type": "boolean", "default": True},
             },
         },

@@ -6,6 +6,8 @@
 
 项目现在也带有一个测试版知识包市场维护能力：服务器维护可下载的题材包、写作包和去 AI 化参考包，本地 MCP 负责查看列表、安装到 `.harness/knowledge/remote/`，再交给 RAG 做本地检索。当前阶段只开放下载和本地安装，不开放普通用户上传。
 
+默认市场地址已随仓库配置：`http://47.103.57.247:9000/manifest`。本地 MCP 和 `sync_packs.py` 不传额外参数时，会优先使用这个地址。
+
 ---
 
 ## 1. 安装
@@ -106,6 +108,12 @@ python rag/scripts/build_index.py
 python rag/mcp/knowledge_server.py
 ```
 
+默认市场地址：
+
+```text
+http://47.103.57.247:9000/manifest
+```
+
 当前可用工具：
 
 ```text
@@ -123,7 +131,7 @@ rebuild_rag_index
 
 ---
 
-## 5. 架构与文档
+## 5. 专项文档
 
 - [系统架构](docs/architecture.md)
 - [Agent 体系](docs/agents.md)
@@ -131,37 +139,6 @@ rebuild_rag_index
 - [项目自定义与 Git 工作流](docs/usage.md)
 - [知识包说明](docs/knowledge-packs.md)
 - [RAG 操作手册](rag/OPERATIONS.md)
-
-`novel-harness` 不是单个提示词，而是一套四层创作管线：
-
-```text
-L0  项目上下文
-    当前写哪本书、项目约束、角色状态、章节摘要、伏笔和事件索引
-
-L1  总编 Agent
-    理解需求、判断任务、分派规划 / 写作 / 审稿 / 上下文 Agent
-
-L2  专业 Agent
-    规划 Agent：大纲、黄金三章、反转、爽点
-    写作 Agent：按项目状态和大纲写正文
-    审稿 Agent：查逻辑、节奏、语病、AI 味
-    上下文 Agent：管理角色、伏笔、章节状态
-
-L3  规则与知识层
-    .harness/knowledge/ 随项目自带知识包、远程知识包、用户私有知识包入口
-    .harness/skills/ 题材规则、语感规则、情节规则、节奏规则
-    rag/             题材参考、拆书资料、去 AI 化经验的检索层
-```
-
-核心入口文件：
-
-```text
-skills/novel-core/SKILL.md       # /novel-core 安装入口
-.harness/agents/总编Agent.md     # 真正的总编调度规则
-.harness/agents/                 # 规划 / 写作 / 审稿 / 上下文 Agent
-.harness/knowledge/              # 可被 RAG 检索的全局知识包
-.harness/skills/                 # 题材、语感、情节、节奏规则
-```
 
 ---
 
@@ -175,31 +152,7 @@ skills/novel-core/SKILL.md       # /novel-core 安装入口
 
 ---
 
-## 7. 目录说明
-
-```text
-novel-harness/
-├── README.md                  # 项目说明
-├── AGENTS.md                  # Codex / OpenCode 入口规则
-├── CLAUDE.md                  # Claude Code / Cursor 可参考入口规则
-├── skills/novel-core/         # 可安装的 Codex Skill 入口
-├── .harness/                  # 核心 Agent、规则、模板
-│   ├── agents/                # 总编 / 规划 / 写作 / 审稿 / 上下文 Agent
-│   ├── knowledge/             # 随项目自带知识包、远程知识包、用户私有知识包入口
-│   ├── skills/                # 题材、语感、情节、节奏模块
-│   ├── project-templates/     # 小说项目约束模板
-│   └── memory/                # 章节、角色、伏笔、事件记忆模板
-├── rag/                       # 轻量 RAG 检索模块
-│   └── mcp/knowledge_server.py # 知识包 MCP 服务
-└── docs/                      # 详细文档与可选安装脚本
-    └── scripts/install-skill.ps1
-```
-
-小说正文项目不随仓库上传。开始创作时，Agent 会在本地使用或创建 `projects/{项目名}/`，用于存放正文、大纲、设定、状态和记忆文件。
-
----
-
-## 8. 当前扩展能力
+## 7. 当前扩展能力
 
 ### 测试版知识包 MCP
 

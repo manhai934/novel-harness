@@ -43,16 +43,25 @@ ModuleNotFoundError: No module named 'numpy'
 ```powershell
 python -m pip install -r rag/requirements.txt
 python rag/scripts/sync_packs.py list
+python rag/scripts/sync_packs.py list --include-remote
 python rag/scripts/sync_packs.py installed
 python rag/scripts/build_index.py
 ```
 
-远程包能力已经预留：
+仓库已内置测试版知识包市场地址，默认会读取：
+
+```text
+http://47.103.57.247:9000/manifest
+```
+
+安装云端知识包：
 
 ```powershell
-python rag/scripts/sync_packs.py --manifest .harness/knowledge/packs/remote.example.json list --include-remote
-python rag/scripts/sync_packs.py --manifest <远程manifest地址> install survival-topic --rebuild-index
+python rag/scripts/sync_packs.py list --include-remote
+python rag/scripts/sync_packs.py install topic-xuanhuan --rebuild-index
 ```
+
+如果你要临时测试其他 manifest，可以继续使用 `--manifest <远程manifest地址>` 覆盖默认市场。
 
 ## 版权边界
 
