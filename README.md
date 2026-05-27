@@ -6,8 +6,6 @@
 
 项目现在也带有一个测试版知识包市场维护能力：服务器维护可下载的题材包、写作包和去 AI 化参考包，本地 MCP 负责查看列表、安装到 `.harness/knowledge/remote/`，再交给 RAG 做本地检索。当前阶段只开放下载和本地安装，不开放普通用户上传。
 
-默认市场地址已随仓库配置：`http://47.103.57.247:9000/manifest`。本地 MCP 和 `sync_packs.py` 不传额外参数时，会优先使用这个地址。
-
 ---
 
 ## 1. 安装
@@ -108,11 +106,7 @@ python rag/scripts/build_index.py
 python rag/mcp/knowledge_server.py
 ```
 
-默认市场地址：
-
-```text
-http://47.103.57.247:9000/manifest
-```
+默认已配置测试版知识包市场，一般不需要手动传 manifest 地址。
 
 当前可用工具：
 

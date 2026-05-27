@@ -48,11 +48,7 @@ python rag/scripts/sync_packs.py installed
 python rag/scripts/build_index.py
 ```
 
-仓库已内置测试版知识包市场地址，默认会读取：
-
-```text
-http://47.103.57.247:9000/manifest
-```
+仓库已内置测试版知识包市场地址，默认会读取；一般不需要手动传 manifest 地址。
 
 安装云端知识包：
 
