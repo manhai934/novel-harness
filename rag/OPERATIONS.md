@@ -158,7 +158,7 @@ python rag/scripts/build_index.py
 ### 知识包管理
 
 ```bash
-# 查看内置知识包
+# 查看随项目自带知识包
 python rag/scripts/sync_packs.py list
 
 # 查看已安装的远程知识包
@@ -176,7 +176,7 @@ python rag/scripts/sync_packs.py --manifest <manifest路径或URL> install <pack
 |------|------|
 | 首次部署 | `python rag/scripts/build_index.py` |
 | 新增/修改了 `.harness/skills/` 中的规则或参考文档 | 调用 `POST /reindex` 或运行 build_index |
-| 新增内置知识包（`.harness/knowledge/builtin/**/*.md`） | 同上 |
+| 新增随项目自带知识包（`.harness/knowledge/included/**/*.md`） | 同上 |
 | 新增远程知识包（`.harness/knowledge/remote/**/*.md`） | 同上 |
 | 新增项目模板（`.harness/project-templates/*.md`） | 同上 |
 | 索引损坏/数据异常 | 同上 |

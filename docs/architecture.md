@@ -26,7 +26,7 @@ L2（专业 Agent 层）
 
 L3（数据层）
    ├── 本地项目文件：projects/{项目名}/正文/ 状态/ 记忆/（不随仓库上传）
-   ├── 知识包：.harness/knowledge/builtin/ remote/ user/
+   ├── 知识包：.harness/knowledge/included/ remote/ user/
    ├── 审查规则：game-datafied/ human-linguistics/ plot-review/ rhythm-review/
    ├── 案例库：cases/
    └── RAG 知识检索层：rag/ (混合检索 + Context Pack)
@@ -98,7 +98,7 @@ novel-harness/
 │   ├── current-project.md            ← 当前项目指针
 │   ├── project-templates/            ← 项目约束模板
 │   ├── knowledge/                    ← RAG 知识包层
-│   │   ├── builtin/                  ← 随仓库发布的内置知识包
+│   │   ├── included/                 ← 随项目自带的知识包
 │   │   ├── packs/                    ← 知识包 manifest
 │   │   ├── remote/                   ← MCP 下载的远程知识包（本地）
 │   │   └── user/                     ← 用户私有知识包（本地）

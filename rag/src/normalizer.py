@@ -174,7 +174,7 @@ def _infer_tags(rel_path, content):
 
     if path.startswith(".harness/knowledge/"):
         parts = path.split("/")
-        tags.extend([p for p in parts[2:-1] if p not in ("builtin", "remote")])
+        tags.extend([p for p in parts[2:-1] if p not in ("included", "remote")])
 
     title_match = re.search(r"^#\s+(.+)", content, re.MULTILINE)
     if title_match:

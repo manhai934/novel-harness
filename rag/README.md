@@ -120,7 +120,7 @@ python rag/scripts/query.py --server
 
 ## 知识源
 
-- `.harness/knowledge/builtin/**/*.md` — 随仓库发布的内置知识包
+- `.harness/knowledge/included/**/*.md` — 随项目自带的知识包
 - `.harness/knowledge/remote/**/*.md` — MCP 下载的远程知识包
 - `.harness/skills/**/references/*.md` — 参考文档
 - `.harness/skills/**/rules/*.md` — 规则文档

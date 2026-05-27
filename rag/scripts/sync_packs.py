@@ -13,6 +13,7 @@ import subprocess
 import sys
 import tempfile
 import urllib.request
+import urllib.error
 import zipfile
 from pathlib import Path
 from urllib.parse import urljoin
@@ -20,7 +21,7 @@ from urllib.parse import urljoin
 PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
 PACKS_DIR = PROJECT_ROOT / ".harness" / "knowledge" / "packs"
 REMOTE_DIR = PROJECT_ROOT / ".harness" / "knowledge" / "remote"
-BUILTIN_MANIFEST = PACKS_DIR / "builtin.manifest.json"
+INCLUDED_MANIFEST = PACKS_DIR / "included.manifest.json"
 DEFAULT_REMOTE_MANIFEST = PACKS_DIR / "remote.example.json"
 
 ALLOWED_EXTENSIONS = {".md", ".txt", ".json", ".yaml", ".yml"}
@@ -35,13 +36,13 @@ def _load_json(path_or_url):
     path = Path(source)
     if not path.is_absolute():
         path = PROJECT_ROOT / path
-    return json.loads(path.read_text(encoding="utf-8"))
+    return json.loads(path.read_text(encoding="utf-8-sig"))
 
 
-def _load_builtin_manifest():
-    if not BUILTIN_MANIFEST.exists():
+def _load_included_manifest():
+    if not INCLUDED_MANIFEST.exists():
         return {"packs": []}
-    return _load_json(BUILTIN_MANIFEST)
+    return _load_json(INCLUDED_MANIFEST)
 
 
 def _load_remote_manifest(path_or_url=None):
@@ -61,7 +62,7 @@ def _installed_packs():
         pack_json = child / "pack.json"
         if pack_json.exists():
             try:
-                data = json.loads(pack_json.read_text(encoding="utf-8"))
+                data = json.loads(pack_json.read_text(encoding="utf-8-sig"))
             except json.JSONDecodeError:
                 data = {"id": child.name, "status": "invalid-manifest"}
         else:
@@ -73,18 +74,19 @@ def _installed_packs():
 
 
 def list_packs(args):
-    builtin = _load_builtin_manifest().get("packs", [])
+    included = _load_included_manifest().get("packs", [])
     remote = _load_remote_manifest(args.manifest).get("packs", []) if args.include_remote else []
     installed_ids = {pack.get("id") for pack in _installed_packs()}
 
     rows = []
-    for pack in builtin:
+    for pack in included:
         rows.append({
             "id": pack.get("id"),
             "name": pack.get("name"),
             "version": pack.get("version"),
             "category": pack.get("category"),
-            "source": "builtin",
+            "origin": "included",
+            "origin_label": "内置",
             "installed": True,
         })
 
@@ -94,7 +96,8 @@ def list_packs(args):
             "name": pack.get("name"),
             "version": pack.get("version"),
             "category": pack.get("category"),
-            "source": "remote",
+            "origin": "server",
+            "origin_label": "云端",
             "installed": pack.get("id") in installed_ids,
         })
 
@@ -104,7 +107,7 @@ def list_packs(args):
 
     for row in rows:
         marker = "已安装" if row["installed"] else "可安装"
-        print(f"{row['id']} [{row['source']}/{marker}] {row.get('name', '')} v{row.get('version', '')}")
+        print(f"{row['id']} [{row['origin_label']}/{marker}] {row.get('name', '')} v{row.get('version', '')}")
 
 
 def list_installed(args):
@@ -125,12 +128,35 @@ def _find_remote_pack(manifest, pack_id):
     for pack in manifest.get("packs", []):
         if pack.get("id") == pack_id:
             return pack
-        raise SystemExit(f"远程 manifest 中找不到知识包: {pack_id}")
+    raise SystemExit(f"远程 manifest 中找不到知识包: {pack_id}")
 
 
 def _download(url, dest):
     with urllib.request.urlopen(url, timeout=60) as response:
         dest.write_bytes(response.read())
+
+
+def _download_pack_archive(manifest, pack, archive_url, dest):
+    try:
+        _download(archive_url, dest)
+        return
+    except urllib.error.HTTPError as error:
+        if error.code != 404:
+            raise
+
+    base_url = manifest.get("base_url", "")
+    if not base_url:
+        raise SystemExit(f"知识包下载失败，且 manifest 缺少 base_url: {pack.get('id')}")
+
+    download_api = urljoin(base_url.rstrip("/") + "/", f"packs/{pack.get('id')}/download")
+    with urllib.request.urlopen(download_api, timeout=30) as response:
+        payload = json.loads(response.read().decode("utf-8"))
+
+    signed_url = payload.get("download_url")
+    if not signed_url:
+        raise SystemExit(f"下载接口未返回 download_url: {download_api}")
+
+    _download(signed_url, dest)
 
 
 def _sha256(path):
@@ -192,7 +218,7 @@ def install_pack(args):
         unpack_dir.mkdir()
 
         print(f"正在下载 {args.pack_id}: {archive_url}")
-        _download(archive_url, archive_path)
+        _download_pack_archive(manifest, pack, archive_url, archive_path)
         _verify_checksum(archive_path, pack.get("checksum"))
         _safe_extract_zip(archive_path, unpack_dir)
 
@@ -202,7 +228,7 @@ def install_pack(args):
 
         if target_dir.exists():
             shutil.rmtree(target_dir)
-        shutil.move(str(unpack_dir), str(target_dir))
+        shutil.copytree(unpack_dir, target_dir)
 
     print(f"已安装 {args.pack_id} -> {target_dir.relative_to(PROJECT_ROOT)}")
     if args.rebuild_index:

@@ -305,7 +305,7 @@ Step 4: 检查当前角色状态/能力边界一致性
 | **通用·创作灵感** | **`.harness/skills/plot-ideation`** | **剧情构思、设定扩展、反转/钩子设计、多方向推演对比、灵感整理与写前准备** |
 | | → `.harness/skills/plot-ideation/references/公共灵感整理与组合.md` | 灵感分型、核心假设、情感内核、风险和组合排序 |
 | | → `.harness/skills/plot-ideation/references/章节写前准备清单.md` | 章节目标、场景、关键句、设定、素材的写前检查 |
-| **全局·知识包** | **`.harness/knowledge`** | **内置知识包、MCP 下载知识包、RAG 可检索题材/写作/去 AI 化资料** |
+| **全局·知识包** | **`.harness/knowledge`** | **随项目自带知识包、MCP 下载知识包、RAG 可检索题材/写作/去 AI 化资料** |
 
 > 总编 Agent 不直接执行具体工作，根据任务委派给对应的专业 Agent。
 > 完整管线：规划 Agent（出方案）→ 写作 Agent（写正文）→ 审稿 Agent（查质量）。

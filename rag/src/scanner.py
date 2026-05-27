@@ -11,7 +11,7 @@ from pathlib import Path
 PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
 
 INCLUDE_PATTERNS = [
-    ".harness/knowledge/builtin/**/*.md",
+    ".harness/knowledge/included/**/*.md",
     ".harness/knowledge/remote/**/*.md",
     ".harness/skills/**/references/*.md",
     ".harness/skills/**/rules/*.md",

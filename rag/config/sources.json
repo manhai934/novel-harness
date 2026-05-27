@@ -2,7 +2,7 @@
   "description": "知识源配置：控制哪些路径允许进入知识库",
   "version": "1.0.0",
   "include_patterns": [
-    ".harness/knowledge/builtin/**/*.md",
+    ".harness/knowledge/included/**/*.md",
     ".harness/knowledge/remote/**/*.md",
     ".harness/skills/**/references/*.md",
     ".harness/skills/**/rules/*.md",

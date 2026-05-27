@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "updated_at": "2026-05-21",
-  "description": "novel-harness 内置知识包清单",
+  "description": "novel-harness 随项目自带知识包清单",
   "packs": [
     {
       "id": "deslop-basic",
@@ -9,7 +9,7 @@
       "version": "0.1.0",
       "category": "deslop",
       "license": "CC BY-NC-SA 4.0",
-      "path": ".harness/knowledge/builtin/deslop",
+      "path": ".harness/knowledge/included/deslop",
       "files": ["去AI味基础包.md"],
       "tags": ["去AI味", "人性化", "语感", "审稿"],
       "rag": {
@@ -23,7 +23,7 @@
       "version": "0.1.0",
       "category": "topics",
       "license": "CC BY-NC-SA 4.0",
-      "path": ".harness/knowledge/builtin/topics",
+      "path": ".harness/knowledge/included/topics",
       "files": ["全民求生题材包.md"],
       "tags": ["全民求生", "庇护所", "资源循环", "天灾"],
       "rag": {
@@ -37,7 +37,7 @@
       "version": "0.1.0",
       "category": "writing",
       "license": "CC BY-NC-SA 4.0",
-      "path": ".harness/knowledge/builtin/writing",
+      "path": ".harness/knowledge/included/writing",
       "files": ["网文写作基础包.md"],
       "tags": ["黄金三章", "章节结构", "爽点", "钩子"],
       "rag": {

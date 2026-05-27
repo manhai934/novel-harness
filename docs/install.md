@@ -37,7 +37,7 @@
 可选启用 RAG 知识包：
 
 ```text
-请阅读 docs/knowledge-packs.md，帮我构建 novel-harness 的内置知识包索引。
+请阅读 docs/knowledge-packs.md，帮我构建 novel-harness 的随项目自带知识包索引。
 ```
 
 ## Claude Code / Cursor / OpenCode 使用方式

@@ -6,7 +6,7 @@
 
 ```text
 .harness/knowledge/
-├── builtin/   # 随仓库发布的内置知识包
+├── included/  # 随项目自带的知识包
 ├── packs/     # 知识包 manifest
 ├── remote/    # 远程下载知识包，本地使用，不上传 Git
 └── user/      # 用户私有知识包，默认不索引，不上传 Git
@@ -18,9 +18,30 @@
 - `webnovel-writing-basic`：黄金三章、章节结构、爽点和钩子。
 - `survival-topic`：全民求生、庇护所、资源循环、天灾压迫题材。
 
+## 启用前先安装依赖
+
+如果要重建 RAG 索引，必须先给当前正在使用的 Python 安装依赖：
+
+```powershell
+python -m pip install -r rag/requirements.txt
+```
+
+注意要使用同一个 Python。比如你用下面这个命令安装知识包：
+
+```powershell
+python rag/scripts/sync_packs.py --manifest <远程manifest地址> install topic-xuanhuan --rebuild-index
+```
+
+那么依赖也要安装到这个 `python` 对应的环境里。否则重建索引时可能会报：
+
+```text
+ModuleNotFoundError: No module named 'numpy'
+```
+
 ## 常用命令
 
 ```powershell
+python -m pip install -r rag/requirements.txt
 python rag/scripts/sync_packs.py list
 python rag/scripts/sync_packs.py installed
 python rag/scripts/build_index.py
@@ -41,7 +62,7 @@ python rag/scripts/sync_packs.py --manifest <远程manifest地址> install survi
 
 默认索引：
 
-- `.harness/knowledge/builtin/**/*.md`
+- `.harness/knowledge/included/**/*.md`
 - `.harness/knowledge/remote/**/*.md`
 - `.harness/skills/**/references/*.md`
 - `.harness/skills/**/rules/*.md`
@@ -52,4 +73,3 @@ python rag/scripts/sync_packs.py --manifest <远程manifest地址> install survi
 - `.harness/knowledge/user/**`
 - `projects/**`
 - `rag/data/**`
-

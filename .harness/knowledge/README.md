@@ -11,7 +11,7 @@
 
 ```text
 .harness/knowledge/
-├── builtin/   # 随仓库发布的内置公开知识包
+├── included/  # 随项目自带的公开知识包
 ├── packs/     # 知识包 manifest、版本和来源说明
 ├── remote/    # MCP 从服务器下载的知识包，本地目录，不上传 Git
 └── user/      # 用户私有知识包，本地目录，不上传 Git
@@ -22,7 +22,7 @@
 默认索引：
 
 ```text
-.harness/knowledge/builtin/
+.harness/knowledge/included/
 .harness/knowledge/remote/
 .harness/skills/
 .harness/project-templates/

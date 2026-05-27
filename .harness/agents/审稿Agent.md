@@ -41,7 +41,7 @@
 | `../skills/plot-review/rules/角色知识边界.md` | 信息边界检查 | 审查维度四：信息边界 |
 | `../skills/rhythm-review/SKILL.md` | 节奏/爽点审查（高潮/钩子/长度） | 用户要求节奏检查或全面审查 |
 | `../skills/rhythm-review/references/阅读体验与章节润色检查.md` | 阅读体感检查 | 用户说读着不顺、太累、辨识度弱时 |
-| `../knowledge/` | 全局知识包（builtin/remote） | 需要题材毒点、平台风格、专项审稿资料时通过 RAG 查询 |
+| `../knowledge/` | 全局知识包（included/remote） | 需要题材毒点、平台风格、专项审稿资料时通过 RAG 查询 |
 | `../rules/审稿输出模板.md` | 按用户等级选择输出格式 | 每次审查完成后 |
 | `../rules/用户身份适配指南.md` | 用户等级对应的反馈规范 | 每次审查时参考 |
 | `../cases/user-profile/` | 用户历史身份记录 | 每次审查时读取 |

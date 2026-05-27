@@ -39,7 +39,7 @@
 | `../skills/plot-ideation/references/章节写前准备清单.md` | 把章节目标落成写前输入包 | 细化到章级规划时 |
 | `../skills/plot-review/rules/大纲质量评估清单.md` | 规划后的快速自检 | 做全书/卷/章纲方案时 |
 | `../project-templates/模板-{题材}.md` | 项目创作约束 | 获取当前项目的底线规则 |
-| `../knowledge/` | 全局知识包（builtin/remote） | 题材、平台风格、写作方法参考不足时通过 RAG 查询 |
+| `../knowledge/` | 全局知识包（included/remote） | 题材、平台风格、写作方法参考不足时通过 RAG 查询 |
 | `../../projects/{项目}/设定/` | 世界观/角色/能力体系/资源体系 | 设定扩展类任务 |
 | `../../projects/{项目}/正文.md` | 最新章节内容 | 理解故事当前位置 |
 
