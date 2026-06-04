@@ -57,6 +57,14 @@ def list_knowledge_packs(arguments: dict[str, Any]) -> dict[str, Any]:
     args = [*_manifest_arg(arguments), "--json", "list"]
     if include_remote:
         args.append("--include-remote")
+    pack_type = str(arguments.get("pack_type", "")).strip()
+    if pack_type:
+        args.extend(["--type", pack_type])
+    return _run_sync(args)
+
+
+def list_knowledge_pack_types(arguments: dict[str, Any]) -> dict[str, Any]:
+    args = [*_manifest_arg(arguments), "--json", "types"]
     return _run_sync(args)
 
 
@@ -68,6 +76,9 @@ def install_knowledge_pack(arguments: dict[str, Any]) -> dict[str, Any]:
     pack_id = _require_pack_id(arguments)
     rebuild_index = bool(arguments.get("rebuild_index", True))
     args = [*_manifest_arg(arguments), "install", pack_id]
+    pack_type = str(arguments.get("pack_type", "")).strip()
+    if pack_type:
+        args.extend(["--type", pack_type])
     if rebuild_index:
         args.append("--rebuild-index")
     return _run_sync(args)
@@ -77,6 +88,9 @@ def update_knowledge_pack(arguments: dict[str, Any]) -> dict[str, Any]:
     pack_id = _require_pack_id(arguments)
     rebuild_index = bool(arguments.get("rebuild_index", True))
     args = [*_manifest_arg(arguments), "update", pack_id]
+    pack_type = str(arguments.get("pack_type", "")).strip()
+    if pack_type:
+        args.extend(["--type", pack_type])
     if rebuild_index:
         args.append("--rebuild-index")
     return _run_sync(args)
@@ -97,13 +111,24 @@ def rebuild_rag_index(arguments: dict[str, Any]) -> dict[str, Any]:
 
 TOOLS = {
     "list_knowledge_packs": {
-        "description": "List built-in and server-provided knowledge packs.",
+        "description": "List built-in and server-provided knowledge packs. Optionally filter server packs by type.",
         "handler": list_knowledge_packs,
         "inputSchema": {
             "type": "object",
             "properties": {
                 "manifest_url": {"type": "string", "description": "Optional server manifest URL. Defaults to the project knowledge-pack market."},
                 "include_remote": {"type": "boolean", "default": True},
+                "pack_type": {"type": "string", "description": "Optional server pack type, for example topic, writing, design, polish, workflow."},
+            },
+        },
+    },
+    "list_knowledge_pack_types": {
+        "description": "List server-provided knowledge pack types from the manifest.",
+        "handler": list_knowledge_pack_types,
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "manifest_url": {"type": "string", "description": "Optional server manifest URL. Defaults to the project knowledge-pack market."},
             },
         },
     },
@@ -121,6 +146,7 @@ TOOLS = {
             "properties": {
                 "pack_id": {"type": "string"},
                 "manifest_url": {"type": "string", "description": "Optional server manifest URL. Defaults to the project knowledge-pack market."},
+                "pack_type": {"type": "string", "description": "Optional server pack type used to narrow manifest lookup."},
                 "rebuild_index": {"type": "boolean", "default": True},
             },
         },
@@ -134,6 +160,7 @@ TOOLS = {
             "properties": {
                 "pack_id": {"type": "string"},
                 "manifest_url": {"type": "string", "description": "Optional server manifest URL. Defaults to the project knowledge-pack market."},
+                "pack_type": {"type": "string", "description": "Optional server pack type used to narrow manifest lookup."},
                 "rebuild_index": {"type": "boolean", "default": True},
             },
         },
