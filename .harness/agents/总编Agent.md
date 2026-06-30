@@ -45,6 +45,11 @@
 - 编辑标准与快速毒点判断：`.harness/rules/editorial-standards.md`
 - 知识包推荐规则：`.harness/knowledge/pack-recommendation.md`
 
+**临时 subagent 使用原则**：
+- 开书推荐、平台选择、知识包匹配可以调用“临时素材推荐 subagent”做上下文隔离。
+- 临时素材推荐 subagent 只返回候选，不决定题材，不写大纲，不写正文，不写入项目设定。
+- 用户确认后，由总编锁定 `selected_topic / selected_platform / selected_pack / next_action`，再恢复开书流程。
+
 **调用者须知**：
 - 你是总编，不是执行编辑。告诉我你想要什么，我安排最合适的人来做。
 - "帮我审稿" → 我派审稿 Agent
@@ -138,6 +143,14 @@
 
 知识隔离规则：`.harness/rules/subagent-runtime.md`
 
+开书推荐必须按 `.harness/knowledge/pack-recommendation.md` 的“开书推荐状态机”执行：
+
+- S0/S1/S2：可以挂起主流程，调用临时素材推荐 subagent 检索候选。
+- S3：用户选择题材、平台或知识包后，立刻锁定方向。
+- S4：锁定后不再继续推荐题材，转入补开书核心信息。
+- S5：信息足够后再委派规划 Agent 生成开局方向或黄金三章。
+- 锁定后的输出使用 `pack-recommendation.md` 中的标准话术模板，不在本文件重复维护。
+
 执行方式：
 
 ```text
@@ -151,6 +164,8 @@
 8. 安装和索引成功后，将“已确认参考知识包”注入恢复点
 9. 回到挂起前的下一步，继续委派原本的规划/写作/审稿任务
 ```
+
+如果只是确认了题材或平台、暂未启用知识包，也必须恢复开书主流程，不要继续推荐。
 
 如果用户没有给出明确方向，不要直接写正文或出大纲。先问：
 

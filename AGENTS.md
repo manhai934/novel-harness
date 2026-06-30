@@ -47,6 +47,12 @@
 5. 用户确认方向后，再调用写作 Agent 写正文。
 6. 正文生成后，默认用审稿 Agent 做一次轻量检查。
 
+开书推荐必须保持流程进度：
+
+- 推荐题材、平台或知识包时，只返回候选，不直接写大纲或正文。
+- 候选只推荐一轮；用户选择后立刻锁定 `selected_topic / selected_platform / selected_pack`。
+- 锁定后恢复开书流程，提示下一步，不要丢失 `next_action`。
+
 ## 重要约束
 
 - `.harness/agents/总编Agent.md` 是 novel-harness 的总编入口；本文件负责把用户请求路由过去。
